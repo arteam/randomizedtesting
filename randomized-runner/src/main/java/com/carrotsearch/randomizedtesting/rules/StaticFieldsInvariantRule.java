@@ -131,7 +131,7 @@ public class StaticFieldsInvariantRule implements TestRule {
           // some problem occurred while trying to measure (e.g. Java 9, SecurityManager).
           // we iterate over all fields to get the "bad one":
           final StringBuilder b = new StringBuilder();
-          b.append("Clean up static fields (in @AfterClass?) and null them, ")
+          b.append("Clean up static fields (in @AfterAll?) and null them, ")
             .append("your test still has references to classes of which the ")
             .append("sizes cannot be measured due to security restrictions or Java 9 ")
             .append("module encapsulation:");
@@ -157,7 +157,7 @@ public class StaticFieldsInvariantRule implements TestRule {
           Collections.sort(fieldsAndValues);
           
           StringBuilder b = new StringBuilder();
-          b.append(String.format(Locale.ROOT, "Clean up static fields (in @AfterClass?), "
+          b.append(String.format(Locale.ROOT, "Clean up static fields (in @AfterAll?), "
               + "your test seems to hang on to approximately %,d bytes (threshold is %,d). " +
               "Field reference sizes (counted individually):",
               ramUsage, leakThreshold));

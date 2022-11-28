@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.internal.AssumptionViolatedException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assertions.*;
 
 public class TestRandomizedTest extends RandomizedTest {
   @Test

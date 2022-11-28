@@ -1,10 +1,10 @@
 package com.carrotsearch.randomizedtesting;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.carrotsearch.randomizedtesting.annotations.Timeout;
 
-import static org.junit.Assert.*;
+import static org.junit.Assertions.*;
 
 /**
  * Test {@link Test#expected()}.

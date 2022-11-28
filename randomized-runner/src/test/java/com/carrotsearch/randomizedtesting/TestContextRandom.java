@@ -3,9 +3,9 @@ package com.carrotsearch.randomizedtesting;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import com.carrotsearch.randomizedtesting.annotations.Seed;
 
 /**
@@ -64,7 +64,7 @@ public class TestContextRandom extends WithNestedTestClass {
     List<Integer> run1 = new ArrayList<Integer>(numbers);
     runTests(Nested3.class);
     List<Integer> run2 = new ArrayList<Integer>(numbers);
-    Assert.assertEquals(run1, run2);
+    Assertions.assertEquals(run1, run2);
   }
 
   @Test
@@ -73,7 +73,7 @@ public class TestContextRandom extends WithNestedTestClass {
     List<Integer> run1 = new ArrayList<Integer>(numbers);
     runTests(Nested1.class);
     List<Integer> run2 = new ArrayList<Integer>(numbers);
-    Assert.assertEquals(run1, run2);
+    Assertions.assertEquals(run1, run2);
   }
 
   @Test
@@ -82,6 +82,6 @@ public class TestContextRandom extends WithNestedTestClass {
     List<Integer> run1 = new ArrayList<Integer>(numbers);
     runTests(Nested2.class);
     List<Integer> run2 = new ArrayList<Integer>(numbers);
-    Assert.assertFalse(run1.equals(run2));
+    Assertions.assertFalse(run1.equals(run2));
   }
 }

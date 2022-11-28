@@ -1,8 +1,8 @@
 package com.carrotsearch.randomizedtesting.timeouts;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.carrotsearch.randomizedtesting.Utils;
 import com.carrotsearch.randomizedtesting.WithNestedTestClass;
@@ -41,7 +41,7 @@ public class Test004ThreadLeaksSuite extends WithNestedTestClass {
 
     FullResult r = runTests(Nested.class);
     Utils.assertFailureWithMessage(r, "1 thread leaked from SUITE scope at");
-    Assert.assertEquals(1, r.getFailureCount());
+    Assertions.assertEquals(1, r.getFailureCount());
     Utils.assertFailuresContainSeeds(r);
     Utils.assertNoLiveThreadsContaining("foobar");
     

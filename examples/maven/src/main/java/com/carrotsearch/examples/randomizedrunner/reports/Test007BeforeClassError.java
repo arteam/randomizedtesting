@@ -1,11 +1,11 @@
 package com.carrotsearch.examples.randomizedrunner.reports;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /** */
 public class Test007BeforeClassError {
-  @BeforeClass
+  @BeforeAll
   public static void errorOnMe() {
     throw new RuntimeException();
   }

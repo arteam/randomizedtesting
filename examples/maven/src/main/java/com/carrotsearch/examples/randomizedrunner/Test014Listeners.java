@@ -1,8 +1,8 @@
 package com.carrotsearch.examples.randomizedrunner;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.notification.RunListener;
 
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
@@ -25,6 +25,6 @@ import com.carrotsearch.randomizedtesting.listeners.ReproduceInfoPrinter;
 public class Test014Listeners extends RandomizedTest {
   @Test
   public void failure() {
-    Assert.assertTrue(false);
+    Assertions.assertTrue(false);
   }
 }

@@ -1,7 +1,7 @@
 package com.carrotsearch.randomizedtesting.timeouts;
 
-import org.junit.Test;
-import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 import com.carrotsearch.randomizedtesting.WithNestedTestClass;
@@ -30,9 +30,9 @@ public class Test014Timeout extends WithNestedTestClass {
   public void testTimeoutInTestAnnotation() {
     FullResult result = runTests(Nested.class);
 
-    Assert.assertEquals(0, result.getIgnoreCount());
-    Assert.assertEquals(2, result.getRunCount());
-    Assert.assertEquals(2, result.getFailureCount());
-    Assert.assertEquals(0, result.getAssumptionIgnored());
+    Assertions.assertEquals(0, result.getIgnoreCount());
+    Assertions.assertEquals(2, result.getRunCount());
+    Assertions.assertEquals(2, result.getFailureCount());
+    Assertions.assertEquals(0, result.getAssumptionIgnored());
   }
 }

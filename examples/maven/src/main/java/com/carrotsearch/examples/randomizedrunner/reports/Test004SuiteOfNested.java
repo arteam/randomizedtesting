@@ -1,6 +1,6 @@
 package com.carrotsearch.examples.randomizedrunner.reports;
 
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 

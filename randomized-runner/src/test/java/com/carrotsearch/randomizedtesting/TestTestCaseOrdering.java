@@ -7,8 +7,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 import com.carrotsearch.randomizedtesting.annotations.Repeat;
 import com.carrotsearch.randomizedtesting.annotations.TestCaseOrdering;
@@ -18,7 +18,7 @@ public class TestTestCaseOrdering extends WithNestedTestClass {
 
   @TestCaseOrdering(TestCaseOrdering.AlphabeticOrder.class)
   public static class Alphabetical extends RandomizedTest {
-    @Before public void assumeNested() { assumeRunningNested(); }
+    @BeforeEach public void assumeNested() { assumeRunningNested(); }
     @Test public void a() { buf.add("a"); }
     @Test public void b() { buf.add("b"); }
     @Test public void c() { buf.add("c"); }
@@ -28,7 +28,7 @@ public class TestTestCaseOrdering extends WithNestedTestClass {
   @TestCaseOrdering(TestCaseOrdering.AlphabeticOrder.class)
   @Repeat(iterations = 3)
   public static class AlphabeticalWithRepetitions extends RandomizedTest {
-    @Before public void assumeNested() { assumeRunningNested(); }
+    @BeforeEach public void assumeNested() { assumeRunningNested(); }
     @Test public void a() { buf.add("a"); }
     @Test public void b() { buf.add("b"); }
     @Test public void c() { buf.add("c"); }
@@ -57,7 +57,7 @@ public class TestTestCaseOrdering extends WithNestedTestClass {
       this.param = param;
     }
 
-    @Before public void assumeNested() { assumeRunningNested(); }
+    @BeforeEach public void assumeNested() { assumeRunningNested(); }
     @Test public void a() { buf.add("a:" + param); }
     @Test public void b() { buf.add("b:" + param); }
     @Test public void c() { buf.add("c:" + param); }
@@ -69,7 +69,7 @@ public class TestTestCaseOrdering extends WithNestedTestClass {
     }
   }
 
-  @Before
+  @BeforeEach
   public void clean() {
     buf = new ArrayList<>();
   }

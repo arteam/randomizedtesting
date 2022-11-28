@@ -1,8 +1,8 @@
 package com.carrotsearch.examples.randomizedrunner;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
 
@@ -19,7 +19,7 @@ import com.carrotsearch.randomizedtesting.RandomizedRunner;
  */
 @RunWith(RandomizedRunner.class)
 public class Test001SimpleUseCase {
-  @Before
+  @BeforeEach
   private void before() {
     // This won't work under the default JUnit runner.
   }

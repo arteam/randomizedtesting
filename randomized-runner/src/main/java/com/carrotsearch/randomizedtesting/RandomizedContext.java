@@ -250,7 +250,7 @@ public final class RandomizedContext {
             "Is this thread running under a " +
             RandomizedRunner.class + " runner context? Add @RunWith(" + RandomizedRunner.class + ".class)" +
                 " to your test class. Make sure your code accesses random contexts within "
-                + "@BeforeClass and @AfterClass boundary (for example, static test class initializers are "
+                + "@BeforeAll and @AfterAll boundary (for example, static test class initializers are "
                 + "not permitted to access random contexts).");
       }
 

@@ -3,10 +3,10 @@ package com.carrotsearch.randomizedtesting;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -76,13 +76,13 @@ public class TestListenersAnnotation extends WithNestedTestClass {
     @Test
     public void failing() throws Exception {
       assumeRunningNested();
-      Assert.fail();
+      Assertions.fail();
     }
 
     @Test
     public void assumptionFailing() throws Exception {
       assumeRunningNested();
-      Assume.assumeTrue(false);
+      Assumptions.assumeTrue(false);
     }
   }
 
@@ -90,6 +90,6 @@ public class TestListenersAnnotation extends WithNestedTestClass {
   public void checkListeners() {
     runTests(Nested2.class);
     // Perhaps this is overly simple, but we just want to know that it executed.
-    Assert.assertTrue(buffer.size() > 0);
+    Assertions.assertTrue(buffer.size() > 0);
   }
 }

@@ -1,9 +1,9 @@
 package com.carrotsearch.randomizedtesting.rules;
 
 import org.assertj.core.api.Assertions;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -31,10 +31,10 @@ public class TestNoClassHooksShadowingRule extends WithNestedTestClass {
         .outerRule(assumeNotNestedRule)
         .around(new NoClassHooksShadowingRule());
 
-    @BeforeClass
+    @BeforeAll
     public static void before() {}
 
-    @BeforeClass
+    @BeforeAll
     private static void privateBefore() {}
 
     @Test
@@ -46,12 +46,12 @@ public class TestNoClassHooksShadowingRule extends WithNestedTestClass {
   }
 
   public static class Sub2 extends Super {
-    @BeforeClass
+    @BeforeAll
     public static void before() {}
   }
 
   public static class Sub3 extends Super {
-    @BeforeClass
+    @BeforeAll
     private static void privateBefore() {}
   }
 

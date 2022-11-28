@@ -4,9 +4,9 @@ import org.junit.*;
 
 /** */
 public class Test008BeforeClassAssumption {
-  @BeforeClass
+  @BeforeAll
   public static void assumeMe() {
-    Assume.assumeTrue(false);
+    Assumptions.assumeTrue(false);
   }
 
   @Test

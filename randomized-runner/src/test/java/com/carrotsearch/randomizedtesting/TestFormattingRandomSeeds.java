@@ -1,8 +1,8 @@
 package com.carrotsearch.randomizedtesting;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.carrotsearch.randomizedtesting.annotations.Repeat;
 
@@ -32,6 +32,6 @@ public class TestFormattingRandomSeeds {
 
   private void check(long seed) {
     String asString = SeedUtils.formatSeedChain(new Randomness(seed, RandomSupplier.DEFAULT));
-    Assert.assertEquals(seed, SeedUtils.parseSeedChain(asString)[0]);
+    Assertions.assertEquals(seed, SeedUtils.parseSeedChain(asString)[0]);
   }
 }

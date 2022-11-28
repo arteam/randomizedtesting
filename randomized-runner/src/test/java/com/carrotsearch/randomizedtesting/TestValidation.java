@@ -2,12 +2,12 @@ package com.carrotsearch.randomizedtesting;
 
 import java.util.Arrays;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class TestValidation extends WithNestedTestClass {
   public class SuiteClassNotStatic {
@@ -17,49 +17,49 @@ public class TestValidation extends WithNestedTestClass {
   }
 
   public static class BeforeClassNotStatic {
-    @BeforeClass
+    @BeforeAll
     public void beforeClass() {
     }
   }
 
   public static class BeforeClassWithArgs {
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass(int a) {
     }
   }
 
   public static class AfterClassNotStatic {
-    @AfterClass
+    @AfterAll
     public void afterClass() {
     }
   }
 
   public static class AfterClassWithArgs {
-    @AfterClass
+    @AfterAll
     public static void afterClass(int a) {
     }
   }
 
   public static class BeforeStatic {
-    @Before
+    @BeforeEach
     public static void before() {
     }
   }
 
   public static class BeforeWithArgs {
-    @Before
+    @BeforeEach
     public void before(int a) {
     }
   }
 
   public static class AfterStatic {
-    @After
+    @AfterEach
     public static void after() {
     }
   }
 
   public static class AfterWithArgs {
-    @After
+    @AfterEach
     public void after(int a) {
     }
   }
@@ -74,7 +74,7 @@ public class TestValidation extends WithNestedTestClass {
         AfterStatic.class, AfterWithArgs.class)) {
       try {
         new RandomizedRunner(c);
-        Assert.fail("Expected validation failure on: " + c.getName());
+        Assertions.fail("Expected validation failure on: " + c.getName());
       } catch (Exception e) {
         // Ok, expected.
       }

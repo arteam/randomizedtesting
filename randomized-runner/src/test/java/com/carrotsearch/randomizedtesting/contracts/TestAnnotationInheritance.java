@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runner.JUnitCore;
@@ -40,12 +40,12 @@ public class TestAnnotationInheritance extends WithNestedTestClass {
       }
     };
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
       order.add("before-class");
     }
 
-    @Before
+    @BeforeEach
     public void before() {
       order.add("before-test");
     }
@@ -55,12 +55,12 @@ public class TestAnnotationInheritance extends WithNestedTestClass {
       order.add("testMethod1");
     }
 
-    @After
+    @AfterEach
     public void after() {
       order.add("after-test");
     }
     
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
       order.add("after-class");
     }

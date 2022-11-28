@@ -11,8 +11,8 @@ import com.carrotsearch.randomizedtesting.RandomizedTest;
  * Leaked background threads can crash tests randomly even if all seeds are
  * known and predictable. They can also affect other test cases and so we should
  * not allow any threads to "leak outside" of their scope (a single test case or
- * a single suite if the thread is started in {@link BeforeClass} or
- * {@link AfterClass} hooks).
+ * a single suite if the thread is started in {@link BeforeAll} or
+ * {@link AfterAll} hooks).
  * 
  * <p>
  * {@link RandomizedRunner} has built-in support for detecting threads that

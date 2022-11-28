@@ -1,13 +1,13 @@
 package com.carrotsearch.randomizedtesting;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assertions.assertEquals;
+import static org.junit.Assertions.assertNotNull;
+import static org.junit.Assertions.assertTrue;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.notification.Failure;
 
 import com.carrotsearch.randomizedtesting.annotations.Seed;
@@ -46,7 +46,7 @@ public class TestStackAugmentation extends WithNestedTestClass {
   @RunWith(RandomizedRunner.class)
   @Seed("deadbeef")
   public static class Nested2 {
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
       assumeRunningNested();
       throw new Error("beforeclass.");
@@ -71,7 +71,7 @@ public class TestStackAugmentation extends WithNestedTestClass {
   @RunWith(RandomizedRunner.class)
   @Seed("deadbeef")
   public static class Nested3 {
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
       assumeRunningNested();
       throw new Error("afterclass.");

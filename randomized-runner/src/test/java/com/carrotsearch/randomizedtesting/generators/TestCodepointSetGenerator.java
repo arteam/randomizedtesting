@@ -4,14 +4,14 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assertions.*;
 
 @RunWith(Suite.class)
 @SuiteClasses({

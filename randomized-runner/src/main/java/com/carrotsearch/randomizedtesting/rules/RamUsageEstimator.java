@@ -351,7 +351,7 @@ final class RamUsageEstimator {
    * 
    * <p><b>Resource Usage:</b> This method internally uses a set of
    * every object seen during traversals so it does allocate memory
-   * (it isn't side-effect free). After the method exits, this memory
+   * (it isn't side-effect free). AfterEach the method exits, this memory
    * should be GCed.</p>
    */
   public static long sizeOf(Object obj) {

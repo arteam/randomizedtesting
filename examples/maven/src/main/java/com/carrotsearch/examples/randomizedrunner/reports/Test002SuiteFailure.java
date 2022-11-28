@@ -1,14 +1,14 @@
 package com.carrotsearch.examples.randomizedrunner.reports;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Suite-level failures.
  */
 public class Test002SuiteFailure {
-  @BeforeClass
+  @BeforeAll
   public static void beforeClass() {
     throw new RuntimeException("beforeClass");
   }
@@ -16,7 +16,7 @@ public class Test002SuiteFailure {
   @Test
   public void testCase() {}
 
-  @AfterClass
+  @AfterAll
   public static void afterClass() {
     throw new RuntimeException("afterClass");
   }

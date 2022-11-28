@@ -2,10 +2,10 @@ package com.carrotsearch.examples.randomizedrunner;
 
 import java.util.Random;
 
-import org.junit.AfterClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.Description;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
@@ -67,7 +67,7 @@ public class Test004MoreRandomness {
     @Test public void method2() { System.out.println("method2, " + randomInt()); }
     @Test public void method3() { System.out.println("method3, " + randomInt()); }
 
-    @AfterClass 
+    @AfterAll 
     public static void empty() {
       System.out.println("--");
     }

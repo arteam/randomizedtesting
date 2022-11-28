@@ -1,15 +1,15 @@
 package com.carrotsearch.examples.randomizedrunner.reports;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
 
 /** */
 @RunWith(RandomizedRunner.class)
 public class Test007BeforeClassErrorRR {
-  @BeforeClass
+  @BeforeAll
   public static void errorOnMe() {
     throw new RuntimeException();
   }

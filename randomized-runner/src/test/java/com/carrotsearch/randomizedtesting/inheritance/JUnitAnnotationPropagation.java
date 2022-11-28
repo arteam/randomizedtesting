@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runner.JUnitCore;
@@ -37,13 +37,13 @@ public class JUnitAnnotationPropagation {
       }
     };
 
-    @BeforeClass public static void beforeClass1() { order.add("super.beforeclass1"); }
+    @BeforeAll public static void beforeClass1() { order.add("super.beforeclass1"); }
                  public static void beforeClass2() { order.add("super.beforeclass2"); }
-    @BeforeClass public static void beforeClass3() { order.add("super.beforeclass3"); }
+    @BeforeAll public static void beforeClass3() { order.add("super.beforeclass3"); }
 
-    @Before      public void before1() { order.add("super.before1"); }
+    @BeforeEach      public void before1() { order.add("super.before1"); }
                  public void before2() { order.add("super.before2"); }
-    @Before      public void before3() { order.add("super.before3"); }
+    @BeforeEach      public void before3() { order.add("super.before3"); }
 
     @Test        public void testMethod1() { order.add("super.testMethod1"); }
                  public void testMethod2() { order.add("super.testMethod2"); }
@@ -56,12 +56,12 @@ public class JUnitAnnotationPropagation {
 
   public static class Sub extends Super {
                  public static void beforeClass1() { order.add("sub.beforeclass1"); }
-    @BeforeClass public static void beforeClass2() { order.add("sub.beforeclass2"); }
-    @BeforeClass public static void beforeClass3() { order.add("sub.beforeclass3"); }
+    @BeforeAll public static void beforeClass2() { order.add("sub.beforeclass2"); }
+    @BeforeAll public static void beforeClass3() { order.add("sub.beforeclass3"); }
 
                  public void before1() { order.add("sub.before1"); }
-    @Before      public void before2() { order.add("sub.before2"); }
-    @Before      public void before3() { order.add("sub.before3"); }
+    @BeforeEach      public void before2() { order.add("sub.before2"); }
+    @BeforeEach      public void before3() { order.add("sub.before3"); }
 
                  public void testMethod1() { order.add("sub.testMethod1"); }
     @Test        public void testMethod2() { order.add("sub.testMethod2"); }

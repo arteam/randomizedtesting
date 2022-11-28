@@ -1,19 +1,19 @@
 package com.carrotsearch.examples.randomizedrunner.reports;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
 
 /** */
 @RunWith(RandomizedRunner.class)
 public class Test006BeforeClassFailureRR {
-  @BeforeClass
+  @BeforeAll
   public static void failOnMe() {
-    Assert.assertTrue(false);
+    Assertions.assertTrue(false);
   }
 
   @Test

@@ -6,9 +6,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.TestRule;
 
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
@@ -16,7 +16,7 @@ import com.carrotsearch.randomizedtesting.SysGlobals;
 
 /**
  * Maximum execution time for a single test method. Test methods are defined as
- * any instance-scope {@link TestRule}s, {@link Before} and {@link After} hooks
+ * any instance-scope {@link TestRule}s, {@link BeforeEach} and {@link AfterEach} hooks
  * and {@link Test} methods. Suite class's constructor is <b>not</b> part of the
  * measured code (see {@link TimeoutSuite}).
  * 

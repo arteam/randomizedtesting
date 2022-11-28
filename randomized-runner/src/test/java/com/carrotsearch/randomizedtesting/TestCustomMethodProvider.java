@@ -6,8 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runners.model.InitializationError;
@@ -51,8 +51,8 @@ public class TestCustomMethodProvider extends WithNestedTestClass {
 
     for (Class<?> cl : valid) {
       Result r = new JUnitCore().run(new RandomizedRunner(cl));
-      Assert.assertEquals(0, r.getFailureCount());
-      Assert.assertEquals(1, r.getRunCount());
+      Assertions.assertEquals(0, r.getFailureCount());
+      Assertions.assertEquals(1, r.getRunCount());
     }
   }
   
@@ -67,7 +67,7 @@ public class TestCustomMethodProvider extends WithNestedTestClass {
     for (Class<?> cl : invalid) {
       try {
         new JUnitCore().run(new RandomizedRunner(cl));
-        Assert.fail("Expected to fail for: " + cl);
+        Assertions.fail("Expected to fail for: " + cl);
       } catch (InitializationError e) {
         // expected.
       }

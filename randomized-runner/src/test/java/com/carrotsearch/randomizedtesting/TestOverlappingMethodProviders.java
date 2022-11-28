@@ -1,7 +1,7 @@
 package com.carrotsearch.randomizedtesting;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 
@@ -20,7 +20,7 @@ public class TestOverlappingMethodProviders {
   @Test
   public void testSingleMethod() throws Exception {
     Result r = new JUnitCore().run(Base.class);
-    Assert.assertEquals(0, r.getFailureCount());
-    Assert.assertEquals(1, r.getRunCount());
+    Assertions.assertEquals(0, r.getFailureCount());
+    Assertions.assertEquals(1, r.getRunCount());
   }
 }

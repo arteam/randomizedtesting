@@ -1,9 +1,9 @@
 package com.carrotsearch.examples.randomizedrunner.reports;
 
-import org.junit.Assert;
-import org.junit.Assume;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class Test001AllStatuses {
   @Test
@@ -15,12 +15,12 @@ public class Test001AllStatuses {
 
   @Test
   public void ignored_assumption() {
-    Assume.assumeTrue(false);
+    Assumptions.assumeTrue(false);
   }
 
   @Test
   public void failure() {
-    Assert.fail();
+    Assertions.fail();
   }
 
   @Test

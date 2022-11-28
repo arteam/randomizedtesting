@@ -2,9 +2,9 @@ package com.carrotsearch.randomizedtesting;
 
 import java.util.HashSet;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.*;
 import org.junit.runner.notification.RunListener;
 
@@ -49,8 +49,8 @@ public class TestSeedParameterOptional extends WithNestedTestClass {
     junit.run(Nested.class);
     
     // Single repetitions, no seed parameter in test name.
-    Assert.assertTrue(tests.contains("method2"));
-    Assert.assertTrue(tests.contains("method3"));
+    Assertions.assertTrue(tests.contains("method2"));
+    Assertions.assertTrue(tests.contains("method3"));
 
     // Method 1 has 2x3 repetitions.
     int count = 0;
@@ -59,6 +59,6 @@ public class TestSeedParameterOptional extends WithNestedTestClass {
         count++;
       }
     }
-    Assert.assertEquals(6, count);
+    Assertions.assertEquals(6, count);
   }
 }

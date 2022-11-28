@@ -15,14 +15,14 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import org.assertj.core.api.Assertions;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -64,7 +64,7 @@ public class WithNestedTestClass {
       }
     };
 
-    @BeforeClass 
+    @BeforeAll 
     public static void beforeClass() { apply(Place.BEFORE_CLASS); }
 
     public ApplyAtPlace() { apply(Place.CONSTRUCTOR); }
@@ -76,16 +76,16 @@ public class WithNestedTestClass {
       }
     };
 
-    @Before 
+    @BeforeEach 
     public void before() { apply(Place.BEFORE); }
 
     @Test
     public void testMethod() { apply(Place.TEST); }
 
-    @After
+    @AfterEach
     public void after() { apply(Place.AFTER); }
 
-    @AfterClass 
+    @AfterAll 
     public static void afterClass() { apply(Place.AFTER_CLASS); }
 
     private static void apply(Place p) {
@@ -156,7 +156,7 @@ public class WithNestedTestClass {
 
   private static volatile Object zombieToken;
 
-  @BeforeClass
+  @BeforeAll
   public static final void setupNested() throws IOException {
     runningNested = true;
     zombieToken = new Object();
@@ -189,7 +189,7 @@ public class WithNestedTestClass {
       });
   }
 
-  @AfterClass
+  @AfterAll
   public static final void clearNested() throws Exception {
     zombieToken = null;
     runningNested = false;
@@ -210,13 +210,13 @@ public class WithNestedTestClass {
     }    
   }
 
-  @After
+  @AfterEach
   public void after() {
     // Reset zombie thread marker.
     RandomizedRunner.zombieMarker.set(false);
   }
   
-  @Before
+  @BeforeEach
   public void before() {
     sw.getBuffer().setLength(0);
     loggingMessages.getBuffer().setLength(0);
@@ -237,7 +237,7 @@ public class WithNestedTestClass {
   }
   
   protected static void assumeRunningNested() {
-    Assume.assumeTrue(runningNested);
+    Assumptions.assumeTrue(runningNested);
   }
   
   protected static Thread startZombieThread(String name) {

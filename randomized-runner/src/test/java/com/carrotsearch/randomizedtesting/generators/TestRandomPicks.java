@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assertions.*;
 
 public class TestRandomPicks extends RandomizedTest {
   @Test(expected = IllegalArgumentException.class)

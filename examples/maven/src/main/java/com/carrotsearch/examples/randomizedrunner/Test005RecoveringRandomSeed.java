@@ -12,7 +12,7 @@ import com.carrotsearch.randomizedtesting.annotations.Seed;
  * {@link RandomizedRunner} uses several "contexts", each of which is assigned a
  * predictable {@link Random} and is modeled using a {@link Randomness}
  * instance. The "suite" or "main" context is available from
- * {@link BeforeClass} or {@link AfterClass} hooks, for example. Each test
+ * {@link BeforeAll} or {@link AfterAll} hooks, for example. Each test
  * method has a nested context with a random seed derived from the main seed. This
  * way even though the order of tests is shuffled and each test can make a
  * random number of calls to its own context's {@link Random} instance, the
@@ -28,7 +28,7 @@ import com.carrotsearch.randomizedtesting.annotations.Seed;
  * context's {@link Randomness} is identical with the runner's but the test context 
  * is a derived value. 
  * <pre>
- * # Static context ({@literal @}BeforeClass)
+ * # Static context ({@literal @}BeforeAll)
  * AF567B2B9F8A8F1C
  * [Randomness, seed=[AF567B2B9F8A8F1C]]
  * # Test context ({@literal @}Test)
@@ -47,7 +47,7 @@ import com.carrotsearch.randomizedtesting.annotations.Seed;
  * <pre>
  * java.lang.AssertionError
  *   at __randomizedtesting.SeedInfo.seed([AF567B2B9F8A8F1C:44E2D1A039274F2A]:0)
- *   at org.junit.Assert.fail(Assert.java:92)
+ *   at org.junit.Assertions.fail(Assertions.java:92)
  * </pre>
  * 
  * The first line of the stack trace is a synthetic (non-existing) class with "source file"
@@ -62,9 +62,9 @@ import com.carrotsearch.randomizedtesting.annotations.Seed;
  */
 @Seed("AF567B2B9F8A8F1C")
 public class Test005RecoveringRandomSeed extends RandomizedTest {
-  @BeforeClass
+  @BeforeAll
   public static void printMainContext() {
-    System.out.println("# Static context (@BeforeClass)");
+    System.out.println("# Static context (@BeforeAll)");
     System.out.println(getContext().getRunnerSeedAsString());
     System.out.println(RandomizedContext.current().getRandomness());
   }
@@ -78,6 +78,6 @@ public class Test005RecoveringRandomSeed extends RandomizedTest {
 
   @Test
   public void failure() {
-    Assert.assertTrue(false);
+    Assertions.assertTrue(false);
   }
 }

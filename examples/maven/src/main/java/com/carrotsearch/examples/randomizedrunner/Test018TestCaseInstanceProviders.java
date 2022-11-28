@@ -1,7 +1,7 @@
 package com.carrotsearch.examples.randomizedrunner;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
 import com.carrotsearch.randomizedtesting.RandomizedTest;
@@ -37,12 +37,12 @@ public class Test018TestCaseInstanceProviders extends RandomizedTest {
   
   /**
    * An instance context requiring some "costly" initialization. Note we could
-   * just add the initialization here, but {@link Before} is nicer because it's
+   * just add the initialization here, but {@link BeforeEach} is nicer because it's
    * executed in the context of parent JUnit rules, etc.
    */
   public volatile Object costly;
   
-  @Before
+  @BeforeEach
   public void costlySetup() throws InterruptedException {
     // Initialize once.
     if (costly == null) {

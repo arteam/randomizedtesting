@@ -2,7 +2,7 @@ package com.carrotsearch.randomizedtesting.timeouts;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.carrotsearch.randomizedtesting.SysGlobals;
 import com.carrotsearch.randomizedtesting.Utils;

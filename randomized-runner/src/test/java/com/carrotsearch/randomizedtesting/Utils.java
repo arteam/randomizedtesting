@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
@@ -27,7 +27,7 @@ public class Utils {
       b.append("\n\t- ").append(f.getTrace());
     }
     Logger.getLogger("").severe(b.toString());
-    Assert.fail(b.toString());
+    Assertions.fail(b.toString());
   }
 
   public static void assertNoFailureWithMessage(Result r, String message) {
@@ -46,7 +46,7 @@ public class Utils {
       b.append("\n\t- ").append(f.getTrace());
     }
     Logger.getLogger("").severe(b.toString());
-    Assert.fail(b.toString());
+    Assertions.fail(b.toString());
   }
 
   /**
@@ -56,7 +56,7 @@ public class Utils {
   public static void assertFailuresContainSeeds(FullResult r) {
     for (Failure f : r.getFailures()) {
       String seed = RandomizedRunner.seedFromThrowable(f.getException());
-      Assert.assertTrue("Not augmented: " + f.getTrace(), seed != null);
+      Assertions.assertTrue("Not augmented: " + f.getTrace(), seed != null);
     }
   }
 

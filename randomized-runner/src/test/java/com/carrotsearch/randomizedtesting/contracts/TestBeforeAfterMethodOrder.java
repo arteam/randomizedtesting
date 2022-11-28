@@ -1,18 +1,18 @@
 package com.carrotsearch.randomizedtesting.contracts;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.MethodRule;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
@@ -78,7 +78,7 @@ public class TestBeforeAfterMethodOrder extends WithNestedTestClass {
    * Test superclass.
    */
   public static class Super {
-    @BeforeClass
+    @BeforeAll
     public static void beforeClassSuper() {
       callOrder.add("beforeClassSuper");
     }
@@ -92,7 +92,7 @@ public class TestBeforeAfterMethodOrder extends WithNestedTestClass {
     @Rule
     public MethodRule superMethodRule = new AppendMethodRule("superMethodRule");
 
-    @Before
+    @BeforeEach
     public final void beforeTest() {
       callOrder.add("beforeTestSuper");
     }
@@ -101,12 +101,12 @@ public class TestBeforeAfterMethodOrder extends WithNestedTestClass {
       throw new RuntimeException("Should be overridden and public.");
     }
 
-    @After
+    @AfterEach
     public final void afterTest() {
       callOrder.add("afterTestSuper");
     }
     
-    @AfterClass
+    @AfterAll
     public static void afterClassSuper() {
       callOrder.add("afterClassSuper");
     }
@@ -125,12 +125,12 @@ public class TestBeforeAfterMethodOrder extends WithNestedTestClass {
     @Rule
     public MethodRule methodRule = new AppendMethodRule("  subMethodRule");
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
       callOrder.add("  beforeClassSub");
     }
 
-    @Before
+    @BeforeEach
     public void beforeTestSub() {
       callOrder.add("  beforeTestSub");
     }
@@ -140,12 +140,12 @@ public class TestBeforeAfterMethodOrder extends WithNestedTestClass {
       callOrder.add("    testMethodSub");
     }
 
-    @After
+    @AfterEach
     public void afterTestSub() {
       callOrder.add("  afterTestSub");
     }
     
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
       callOrder.add("  afterClassSub");
     }
@@ -156,12 +156,12 @@ public class TestBeforeAfterMethodOrder extends WithNestedTestClass {
    */
   @Seed("deadbeef")
   public static class SubSubFixedSeed extends Super {
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
       callOrder.add("beforeClassSubFS");
     }
 
-    @Before
+    @BeforeEach
     public void beforeTestSub() {
       assumeRunningNested();
       callOrder.add("beforeTestSubFS");
@@ -179,18 +179,18 @@ public class TestBeforeAfterMethodOrder extends WithNestedTestClass {
           + RandomizedContext.current().getRandom().nextInt());
     }
 
-    @After
+    @AfterEach
     public void afterTestSub() {
       callOrder.add("afterTestSubFS");
     }
     
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
       callOrder.add("afterClassSubFS");
     }
   }
 
-  @Before
+  @BeforeEach
   public void cleanup() {
     callOrder.clear();
   }
@@ -217,7 +217,7 @@ public class TestBeforeAfterMethodOrder extends WithNestedTestClass {
             k < j ? callOrder.get(k) : "--"));
       }
 
-      Assert.fail("JUnit4 and RandomizedRunner differed.");
+      Assertions.fail("JUnit4 and RandomizedRunner differed.");
     }
   }
 

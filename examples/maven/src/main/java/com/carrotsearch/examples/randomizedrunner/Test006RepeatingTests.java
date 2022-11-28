@@ -6,7 +6,7 @@ import com.carrotsearch.randomizedtesting.*;
 import com.carrotsearch.randomizedtesting.annotations.Repeat;
 import com.carrotsearch.randomizedtesting.annotations.Seed;
 
-import static org.junit.Assert.*;
+import static org.junit.Assertions.*;
 
 /**
  * In example {@link Test005RecoveringRandomSeed} we presented
@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
  * Note how the seed is fixed using {@link Seed} annotation (on the
  * method) rather than on the class. This ensures the method's context is
  * pinned to that value, but the main seed is still random. If you have
- * {@link BeforeClass} hooks that depend on randomness you should use
+ * {@link BeforeAll} hooks that depend on randomness you should use
  * suite-level {@link Seed} annotation and pin the main seed instead.
  * 
  * <p>You can also set {@link Repeat#useConstantSeed()} to <code>false</code> and

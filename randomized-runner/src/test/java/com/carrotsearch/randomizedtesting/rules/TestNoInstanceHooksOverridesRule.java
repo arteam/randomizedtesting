@@ -3,9 +3,9 @@ package com.carrotsearch.randomizedtesting.rules;
 import java.lang.reflect.Method;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -38,13 +38,13 @@ public class TestNoInstanceHooksOverridesRule extends WithNestedTestClass {
           }
         });
 
-    @Before
+    @BeforeEach
     public void before() {}
 
-    @Before
+    @BeforeEach
     private void privateBefore() {}
 
-    @Before
+    @BeforeEach
     public void setup() {}
     
     @Test
@@ -56,12 +56,12 @@ public class TestNoInstanceHooksOverridesRule extends WithNestedTestClass {
   }
 
   public static class Sub2 extends Super {
-    @Before
+    @BeforeEach
     public void before() {}
   }
 
   public static class Sub3 extends Super {
-    @Before
+    @BeforeEach
     private void privateBefore() {}
   }
 

@@ -19,9 +19,8 @@ import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 
-import org.junit.Assume;
-import org.junit.AssumptionViolatedException;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.carrotsearch.randomizedtesting.annotations.Listeners;
 import com.carrotsearch.randomizedtesting.annotations.Nightly;
@@ -31,18 +30,19 @@ import com.carrotsearch.randomizedtesting.generators.RandomBytes;
 import com.carrotsearch.randomizedtesting.generators.RandomNumbers;
 import com.carrotsearch.randomizedtesting.generators.RandomPicks;
 import com.carrotsearch.randomizedtesting.generators.RandomStrings;
+import org.opentest4j.TestAbortedException;
 
 /**
  * Common scaffolding for subclassing randomized tests.
- * 
+ *
  * @see Listeners
  * @see RandomizedContext
  */
-@RunWith(RandomizedRunner.class)
+@ExtendWith(RandomizedRunner.class)
 public class RandomizedTest {
   /**
    * The global multiplier property (Double).
-   * 
+   *
    * @see #multiplier()
    */
   public static final String SYSPROP_MULTIPLIER = "randomized.multiplier";
@@ -55,18 +55,18 @@ public class RandomizedTest {
   protected static final Charset US_ASCII = StandardCharsets.US_ASCII;
 
   /* This charset does not need to be supported, but I don't know any JVM under which it wouldn't be. */
-  
+
   protected static final Charset UTF32 = Charset.forName("UTF-32");
 
-  /** 
+  /**
    * Default multiplier.
-   *  
+   *
    * @see #SYSPROP_MULTIPLIER
    */
   private static final double DEFAULT_MULTIPLIER = 1.0d;
 
   /**
-   * Shortcut for {@link RandomizedContext#current()}. 
+   * Shortcut for {@link RandomizedContext#current()}.
    */
   public static RandomizedContext getContext() {
     return RandomizedContext.current();
@@ -74,7 +74,7 @@ public class RandomizedTest {
 
   /**
    * Returns true if {@link Nightly} test group is enabled.
-   * 
+   *
    * @see Nightly
    */
   public static boolean isNightly() {
@@ -85,7 +85,7 @@ public class RandomizedTest {
    * Shortcut for {@link RandomizedContext#getRandom()}. Even though this method
    * is static, it returns per-thread {@link Random} instance, so no race conditions
    * can occur.
-   * 
+   *
    * <p>It is recommended that specific methods are used to pick random values.
    */
   public static Random getRandom() {
@@ -108,19 +108,19 @@ public class RandomizedTest {
   public static double  randomGaussian() { return getRandom().nextGaussian(); }
 
   //
-  // Biased value pickers. 
+  // Biased value pickers.
   //
-  
+
   /**
    * A biased "evil" random float between min and max (inclusive).
-   * 
+   *
    * @see BiasedNumbers#randomFloatBetween(Random, float, float)
    */
   public static float  biasedFloatBetween(float min, float max) { return BiasedNumbers.randomFloatBetween(getRandom(), min, max); }
 
   /**
    * A biased "evil" random double between min and max (inclusive).
-   * 
+   *
    * @see BiasedNumbers#randomDoubleBetween(Random, double, double)
    */
   public static double biasedDoubleBetween(double min, double max) { return BiasedNumbers.randomDoubleBetween(getRandom(), min, max); }
@@ -129,83 +129,83 @@ public class RandomizedTest {
   // Delegates to RandomBytes.
   //
 
-  /** 
+  /**
    * Returns a byte array with random content.
-   * 
+   *
    * @param length The length of the byte array. Can be zero.
-   * @return Returns a byte array with random content. 
+   * @return Returns a byte array with random content.
    */
-  public static byte[] randomBytesOfLength(int length) { 
-    return RandomBytes.randomBytesOfLength(new Random(getRandom().nextLong()), length); 
-  }  
+  public static byte[] randomBytesOfLength(int length) {
+    return RandomBytes.randomBytesOfLength(new Random(getRandom().nextLong()), length);
+  }
 
-  /** 
+  /**
    * Returns a byte array with random content.
-   * 
+   *
    * @param minLength The minimum length of the byte array. Can be zero.
    * @param maxLength The maximum length of the byte array. Can be zero.
-   * @return Returns a byte array with random content. 
+   * @return Returns a byte array with random content.
    */
-  public static byte[] randomBytesOfLength(int minLength, int maxLength) { 
-    return RandomBytes.randomBytesOfLengthBetween(new Random(getRandom().nextLong()), minLength, maxLength); 
-  }  
+  public static byte[] randomBytesOfLength(int minLength, int maxLength) {
+    return RandomBytes.randomBytesOfLengthBetween(new Random(getRandom().nextLong()), minLength, maxLength);
+  }
 
   //
   // Delegates to RandomNumbers.
   //
 
-  /** 
-   * A random integer from 0..max (inclusive). 
+  /**
+   * A random integer from 0..max (inclusive).
    */
   @Deprecated
   public static int randomInt(int max) {
     return RandomNumbers.randomIntBetween(getRandom(), 0, max);
   }
 
-  /** 
-   * A random long from 0..max (inclusive). 
+  /**
+   * A random long from 0..max (inclusive).
    */
   @Deprecated
   public static long randomLong(long max) {
     return RandomNumbers.randomLongBetween(getRandom(), 0, max);
   }
 
-  /** 
+  /**
    * A random integer from <code>min</code> to <code>max</code> (inclusive).
-   * 
+   *
    * @see #scaledRandomIntBetween(int, int)
    */
   public static int randomIntBetween(int min, int max) {
     return RandomNumbers.randomIntBetween(getRandom(), min, max);
   }
 
-  /** 
-   * An alias for {@link #randomIntBetween(int, int)}. 
-   * 
+  /**
+   * An alias for {@link #randomIntBetween(int, int)}.
+   *
    * @see #scaledRandomIntBetween(int, int)
    */
   public static int between(int min, int max) {
     return randomIntBetween(min, max);
   }
 
-  /** 
+  /**
    * A random long from <code>min</code> to <code>max</code> (inclusive).
    */
   public static long randomLongBetween(long min, long max) {
     return RandomNumbers.randomLongBetween(getRandom(), min, max);
   }
 
-  /** 
-   * An alias for {@link #randomLongBetween}. 
+  /**
+   * An alias for {@link #randomLongBetween}.
    */
   public static long between(long min, long max) {
     return randomLongBetween(min, max);
   }
 
-  /** 
+  /**
    * Returns a random value greater or equal to <code>min</code>. The value
    * picked is affected by {@link #isNightly()} and {@link #multiplier()}.
-   * 
+   *
    * @see #scaledRandomIntBetween(int, int)
    */
   public static int atLeast(int min) {
@@ -213,15 +213,15 @@ public class RandomizedTest {
     return scaledRandomIntBetween(min, Integer.MAX_VALUE);
   }
 
-  /** 
+  /**
    * Returns a non-negative random value smaller or equal <code>max</code>. The value
    * picked is affected by {@link #isNightly()} and {@link #multiplier()}.
-   * 
+   *
    * <p>This method is effectively an alias to:
    * <pre>
    * scaledRandomIntBetween(0, max)
    * </pre>
-   * 
+   *
    * @see #scaledRandomIntBetween(int, int)
    */
   public static int atMost(int max) {
@@ -247,7 +247,7 @@ public class RandomizedTest {
   //
   // Delegates to RandomPicks
   //
-  
+
   /**
    * Pick a random object from the given array. The array must not be empty.
    */
@@ -277,7 +277,7 @@ public class RandomizedTest {
   /**
    * A multiplier can be used to linearly scale certain values. It can be used to make data
    * or iterations of certain tests "heavier" for nightly runs, for example.
-   * 
+   *
    * <p>The default multiplier value is 1.</p>
    *
    * @see #SYSPROP_MULTIPLIER
@@ -289,7 +289,7 @@ public class RandomizedTest {
 
   /**
    * Returns a "scaled" number of iterations for loops which can have a variable
-   * iteration count. This method is effectively 
+   * iteration count. This method is effectively
    * an alias to {@link #scaledRandomIntBetween(int, int)}.
    */
   public static int iterations(int min, int max) {
@@ -297,9 +297,9 @@ public class RandomizedTest {
   }
 
   /**
-   * Returns a "scaled" random number between min and max (inclusive). The number of 
-   * iterations will fall between [min, max], but the selection will also try to 
-   * achieve the points below: 
+   * Returns a "scaled" random number between min and max (inclusive). The number of
+   * iterations will fall between [min, max], but the selection will also try to
+   * achieve the points below:
    * <ul>
    *   <li>the multiplier can be used to move the number of iterations closer to min
    *   (if it is smaller than 1) or closer to max (if it is larger than 1). Setting
@@ -307,9 +307,9 @@ public class RandomizedTest {
    *   <li>on normal runs, the number will be closer to min than to max.</li>
    *   <li>on nightly runs, the number will be closer to max than to min.</li>
    * </ul>
-   * 
+   *
    * @see #multiplier()
-   * 
+   *
    * @param min Minimum (inclusive).
    * @param max Maximum (inclusive).
    * @return Returns a random number between min and max.
@@ -324,17 +324,17 @@ public class RandomizedTest {
     if (isNightly()) {
       return max - scaled;
     } else {
-      return min + scaled; 
+      return min + scaled;
     }
   }
-  
-  // Methods to help with I/O and environment.  
+
+  // Methods to help with I/O and environment.
 
   /**
    * @see #globalTempDir()
    */
   private static Path globalTempDir;
-  
+
   /** */
   private static AtomicInteger tempSubFileNameCount = new AtomicInteger(0);
 
@@ -348,7 +348,7 @@ public class RandomizedTest {
     synchronized (RandomizedTest.class) {
       if (globalTempDir == null) {
         String tempDirPath = System.getProperty("java.io.tmpdir");
-        if (tempDirPath == null) 
+        if (tempDirPath == null)
           throw new IOException("No property java.io.tmpdir?");
 
         Path tempDir = Paths.get(tempDirPath);
@@ -407,7 +407,7 @@ public class RandomizedTest {
 
   /**
    * Creates a new temporary directory for the {@link LifecycleScope#TEST} duration.
-   * 
+   *
    * @see #globalTempDir()
    */
   public Path newTempDir() throws IOException {
@@ -415,7 +415,7 @@ public class RandomizedTest {
   }
 
   /**
-   * Creates a temporary directory, deleted after the given lifecycle phase. 
+   * Creates a temporary directory, deleted after the given lifecycle phase.
    * Temporary directory is created relative to a globally picked temporary directory.
    */
   public static Path newTempDir(LifecycleScope scope) throws IOException {
@@ -430,7 +430,7 @@ public class RandomizedTest {
   /**
    * Registers a {@link Closeable} resource that should be closed after the test
    * completes.
-   * 
+   *
    * @return <code>resource</code> (for call chaining).
    */
   public <T extends Closeable> T closeAfterTest(T resource) {
@@ -440,7 +440,7 @@ public class RandomizedTest {
   /**
    * Registers a {@link Closeable} resource that should be closed after the suite
    * completes.
-   * 
+   *
    * @return <code>resource</code> (for call chaining).
    */
   public static <T extends Closeable> T closeAfterSuite(T resource) {
@@ -474,7 +474,7 @@ public class RandomizedTest {
 
   /**
    * Recursively delete a folder. Throws an exception if any failure occurs.
-   * 
+   *
    * @param path Path to the folder to be (recursively) deleted. The folder must
    *             exist.
    */
@@ -493,13 +493,13 @@ public class RandomizedTest {
           Files.delete(dir);
           return FileVisitResult.CONTINUE;
         }
-  
+
         @Override
         public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
           Files.delete(file);
           return FileVisitResult.CONTINUE;
         }
-  
+
         @Override
         public FileVisitResult visitFileFailed(Path file, IOException e) throws IOException {
           throw e;
@@ -514,7 +514,7 @@ public class RandomizedTest {
    * Assign a temporary server socket. If you need a temporary port one can
    * assign a server socket and close it immediately, just to acquire its port
    * number.
-   * 
+   *
    * @param scope
    *          The lifecycle scope to close the socket after. If the socket is
    *          closed earlier, nothing happens (silently dropped).
@@ -530,10 +530,10 @@ public class RandomizedTest {
 
     return socket;
   }
-  
-  /** 
+
+  /**
    * Return a random Locale from the available locales on the system.
-   * 
+   *
    * <p>Warning: This test assumes the returned array of locales is repeatable from jvm execution
    * to jvm execution. It _may_ be different from jvm to jvm and as such, it can render
    * tests execute in a different way.</p>
@@ -548,9 +548,9 @@ public class RandomizedTest {
     return randomFrom(availableLocales);
   }
 
-  /** 
+  /**
    * Return a random TimeZone from the available timezones on the system.
-   * 
+   *
    * <p>Warning: This test assumes the returned array of time zones is repeatable from jvm execution
    * to jvm execution. It _may_ be different from jvm to jvm and as such, it can render
    * tests execute in a different way.</p>
@@ -565,16 +565,16 @@ public class RandomizedTest {
   // Characters and strings. Delegates to RandomStrings and that in turn to StringGenerators.
   //
 
-  /** 
-   * @deprecated Use {@link #randomAsciiLettersOfLengthBetween} instead.  
+  /**
+   * @deprecated Use {@link #randomAsciiLettersOfLengthBetween} instead.
    */
   @Deprecated
   public static String randomAsciiOfLengthBetween(int minCodeUnits, int maxCodeUnits) {
     return randomAsciiLettersOfLengthBetween(minCodeUnits, maxCodeUnits);
   }
 
-  /** 
-   * @deprecated Use {@link #randomAsciiLettersOfLength} instead.  
+  /**
+   * @deprecated Use {@link #randomAsciiLettersOfLength} instead.
    */
   @Deprecated
   public static String randomAsciiOfLength(int codeUnits) {
@@ -623,7 +623,7 @@ public class RandomizedTest {
   public static String randomUnicodeOfLength(int codeUnits) {
     return RandomStrings.randomUnicodeOfLength(getRandom(), codeUnits);
   }
-  
+
   /**
    * @see RandomStrings#randomUnicodeOfCodepointLengthBetween
    */
@@ -631,14 +631,14 @@ public class RandomizedTest {
     return RandomStrings.randomUnicodeOfCodepointLengthBetween(getRandom(),
         minCodePoints, maxCodePoints);
   }
-  
+
   /**
    * @see RandomStrings#randomUnicodeOfCodepointLength
    */
   public static String randomUnicodeOfCodepointLength(int codePoints) {
     return RandomStrings.randomUnicodeOfCodepointLength(getRandom(), codePoints);
   }
-  
+
   /**
    * @see RandomStrings#randomRealisticUnicodeOfLengthBetween
    */
@@ -646,14 +646,14 @@ public class RandomizedTest {
     return RandomStrings.randomRealisticUnicodeOfLengthBetween(getRandom(),
         minCodeUnits, maxCodeUnits);
   }
-  
+
   /**
    * @see RandomStrings#randomRealisticUnicodeOfLength
    */
   public static String randomRealisticUnicodeOfLength(int codeUnits) {
     return RandomStrings.randomRealisticUnicodeOfLength(getRandom(), codeUnits);
   }
-  
+
   /**
    * @see RandomStrings#randomRealisticUnicodeOfCodepointLengthBetween
    */
@@ -662,7 +662,7 @@ public class RandomizedTest {
     return RandomStrings.randomRealisticUnicodeOfCodepointLengthBetween(
         getRandom(), minCodePoints, maxCodePoints);
   }
-  
+
   /**
    * @see RandomStrings#randomRealisticUnicodeOfCodepointLength
    */
@@ -687,14 +687,14 @@ public class RandomizedTest {
     return objects;
   }
 
-  // 
+  //
   // wrappers for utility methods elsewhere that don't require try..catch blocks
   // and rethrow the original checked exception if needed. dirty a bit, but saves
   // keystrokes...
   //
-  
+
   /**
-   * Same as {@link Thread#sleep(long)}.  
+   * Same as {@link Thread#sleep(long)}.
    */
   public static void sleep(long millis) {
     try {
@@ -709,10 +709,10 @@ public class RandomizedTest {
   //
 
   /**
-   * Making {@link Assume#assumeTrue(boolean)} directly available.
+   * Making {@link Assumptions#assumeTrue(boolean)} directly available.
    */
   public static void assumeTrue(boolean condition) {
-    Assume.assumeTrue(condition);
+    Assumptions.assumeTrue(condition);
   }
 
   /**
@@ -722,16 +722,13 @@ public class RandomizedTest {
     assumeTrue(!condition);
   }
 
-  /**
-   * Making {@link Assume#assumeNotNull(Object...)} directly available.
-   */
   public static void assumeNotNull(Object... objects) {
-    Assume.assumeNotNull(objects);
+    Assumptions.assumeTrue(objects != null);
   }
 
   /**
    * @param condition
-   *          If <code>false</code> an {@link AssumptionViolatedException} is
+   *          If <code>false</code> an {@link TestAbortedException} is
    *          thrown by this method and the test case (should be) ignored (or
    *          rather technically, flagged as a failure not passing a certain
    *          assumption). Tests that are assumption-failures do not break
@@ -742,7 +739,7 @@ public class RandomizedTest {
   public static void assumeTrue(String message, boolean condition) {
     if (!condition) {
       // @see {@link Rants#RANT_2}.
-      throw new AssumptionViolatedException(message);
+      throw new TestAbortedException(message);
     }
   }
 
@@ -759,22 +756,22 @@ public class RandomizedTest {
   public static void assumeNoException(String msg, Throwable t) {
     if (t != null) {
       // This does chain the exception as the cause.
-      throw new AssumptionViolatedException(msg, t);
+      throw new TestAbortedException(msg, t);
     }
   }
-  
+
   /**
-   * Making {@link Assume#assumeNoException(Throwable)} directly available.
+   * Making assumeNoException directly available.
    */
   public static void assumeNoException(Throwable t) {
-    Assume.assumeNoException(t);
+    Assumptions.assumeTrue(t != null);
   }
 
   //
   // System properties and their conversion to common types, with defaults.
   //
-  
-  /** 
+
+  /**
    * Get a system property and convert it to a double, if defined. Otherwise, return the default value.
    */
   public static double systemPropertyAsDouble(String propertyName, double defaultValue) {
@@ -791,7 +788,7 @@ public class RandomizedTest {
     }
   }
 
-  /** 
+  /**
    * Get a system property and convert it to a float, if defined. Otherwise, return the default value.
    */
   public static float systemPropertyAsFloat(String propertyName, float defaultValue) {
@@ -808,7 +805,7 @@ public class RandomizedTest {
     }
   }
 
-  /** 
+  /**
    * Get a system property and convert it to an int, if defined. Otherwise, return the default value.
    */
   public static int systemPropertyAsInt(String propertyName, int defaultValue) {
@@ -819,13 +816,13 @@ public class RandomizedTest {
       } catch (NumberFormatException e) {
         throw new IllegalArgumentException("Integer value expected for property " +
             propertyName + ": " + v, e);
-      }        
+      }
     } else {
       return defaultValue;
     }
   }
 
-  /** 
+  /**
    * Get a system property and convert it to a long, if defined. Otherwise, return the default value.
    */
   public static float systemPropertyAsLong(String propertyName, int defaultValue) {
@@ -855,7 +852,7 @@ public class RandomizedTest {
    * Get a system property and convert it to a boolean, if defined. This method returns
    * <code>true</code> if the property exists an is set to any of the following strings
    * (case-insensitive): <code>true</code>, <code>on</code>, <code>yes</code>, <code>enabled</code>.
-   * 
+   *
    * <p><code>false</code> is returned if the property exists and is set to any of the
    * following strings (case-insensitive):
    * <code>false</code>, <code>off</code>, <code>no</code>, <code>disabled</code>.
@@ -866,7 +863,7 @@ public class RandomizedTest {
     if (v != null && !v.trim().isEmpty()) {
       v = v.trim();
       Boolean result = BOOLEANS.get(v);
-      if (result != null) 
+      if (result != null)
         return result.booleanValue();
       else
         throw new IllegalArgumentException("Boolean value expected for property " +
@@ -886,6 +883,6 @@ public class RandomizedTest {
    */
   private static void checkContext() {
     // Will throw an exception if not available.
-    RandomizedContext.current(); 
+    RandomizedContext.current();
   }
 }

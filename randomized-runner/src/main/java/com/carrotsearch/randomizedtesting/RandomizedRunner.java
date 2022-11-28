@@ -31,16 +31,17 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
-import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.AssumptionViolatedException;
+import org.junit.jupiter.api.extension.Extension;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
@@ -82,27 +83,27 @@ import com.carrotsearch.randomizedtesting.annotations.TimeoutSuite;
 import com.carrotsearch.randomizedtesting.rules.StatementAdapter;
 
 /**
- * A {@link Runner} implementation for running randomized test cases with 
+ * A {@link Extension} implementation for running randomized test cases with
  * predictable and repeatable randomness.
  * 
  * <p>Supports the following JUnit4 features:
  * <ul>
- *   <li>{@link BeforeClass}-annotated methods (before all tests of a class/superclass),</li>
- *   <li>{@link Before}-annotated methods (before each test),</li>
+ *   <li>{@link BeforeAll}-annotated methods (before all tests of a class/superclass),</li>
+ *   <li>{@link BeforeEach}-annotated methods (before each test),</li>
  *   <li>{@link Test}-annotated methods,</li>
- *   <li>{@link After}-annotated methods (after each test),</li>
- *   <li>{@link AfterClass}-annotated methods (after all tests of a class/superclass),</li>
+ *   <li>{@link AfterEach}-annotated methods (after each test),</li>
+ *   <li>{@link AfterAll}-annotated methods (after all tests of a class/superclass),</li>
  *   <li>{@link Rule}-annotated fields implementing {@link org.junit.rules.MethodRule} 
  *       and {@link TestRule}.</li>
  * </ul>
  * 
  * <p>Contracts:
  * <ul>
- *   <li>{@link BeforeClass}, {@link Before}
+ *   <li>{@link BeforeAll}, {@link BeforeEach}
  *   methods declared in superclasses are called before methods declared in subclasses,</li>
- *   <li>{@link AfterClass}, {@link After}
+ *   <li>{@link AfterAll}, {@link AfterEach}
  *   methods declared in superclasses are called after methods declared in subclasses,</li>
- *   <li>{@link BeforeClass}, {@link Before}, {@link AfterClass}, {@link After}
+ *   <li>{@link BeforeAll}, {@link BeforeEach}, {@link AfterAll}, {@link AfterEach}
  *   methods declared within the same class are called in <b>randomized</b> order
  *   derived from the main seed (repeatable with the same seed),</li>
  * </ul>
@@ -135,7 +136,7 @@ import com.carrotsearch.randomizedtesting.rules.StatementAdapter;
  * @see RandomizedContext
  * @see TestMethodProviders
  */
-public final class RandomizedRunner extends Runner implements Filterable {
+public final class RandomizedRunner implements Extension, Filterable {
   /**
    * Fake package of a stack trace entry inserted into exceptions thrown by 
    * test methods. These stack entries contain additional information about
@@ -875,14 +876,14 @@ public final class RandomizedRunner extends Runner implements Filterable {
   }
 
   /**
-   * Decorate a {@link Statement} with {@link BeforeClass} hooks.
+   * Decorate a {@link Statement} with {@link BeforeAll} hooks.
    */
   private Statement withClassBefores(final Statement s) {
     return new Statement() {
       @Override
       public void evaluate() throws Throwable {
         try {
-          for (Method method : getShuffledMethods(BeforeClass.class)) {
+          for (Method method : getShuffledMethods(BeforeAll.class)) {
             invoke(method, null);
           }
         } catch (Throwable t) {
@@ -904,7 +905,7 @@ public final class RandomizedRunner extends Runner implements Filterable {
           errors.add(augmentStackTrace(t, runnerRandomness));
         }
 
-        for (Method method : getShuffledMethods(AfterClass.class)) {
+        for (Method method : getShuffledMethods(AfterAll.class)) {
           try {
             invoke(method, null);
           } catch (Throwable t) {
@@ -969,8 +970,8 @@ public final class RandomizedRunner extends Runner implements Filterable {
    * Wrap before and after hooks.
    */
   private Statement wrapBeforeAndAfters(Statement s, final TestCandidate c, final Object instance) {
-    // Process @Before hooks. The first @Before to fail will immediately stop processing any other @Befores.
-    final List<Method> befores = getShuffledMethods(Before.class);
+    // Process @BeforeEach hooks. The first @BeforeEach to fail will immediately stop processing any other @Befores.
+    final List<Method> befores = getShuffledMethods(BeforeEach.class);
     if (!befores.isEmpty()) {
       final Statement afterBefores = s;
       s = new Statement() {
@@ -984,8 +985,8 @@ public final class RandomizedRunner extends Runner implements Filterable {
       };
     }
 
-    // Process @After hooks. All @After hooks are processed, regardless of their own exceptions.
-    final List<Method> afters = getShuffledMethods(After.class);
+    // Process @AfterEach hooks. All @AfterEach hooks are processed, regardless of their own exceptions.
+    final List<Method> afters = getShuffledMethods(AfterEach.class);
     if (!afters.isEmpty()) {
       final Statement beforeAfters = s;
       s = new Statement() {
@@ -1050,7 +1051,7 @@ public final class RandomizedRunner extends Runner implements Filterable {
         }
         
         // If we're here this means we passed the test that expected a failure.
-        Assert.fail("Expected an exception but the test passed: "
+        Assertions.fail("Expected an exception but the test passed: "
             + expectedClass.getName());
       }
     };
@@ -1251,7 +1252,7 @@ public final class RandomizedRunner extends Runner implements Filterable {
     }
 
     // Reverse processing order to super...clazz for befores
-    if (ann == Before.class || ann == BeforeClass.class) {
+    if (ann == BeforeEach.class || ann == BeforeAll.class) {
       Collections.reverse(methods);
     }
 
@@ -1850,34 +1851,34 @@ public final class RandomizedRunner extends Runner implements Filterable {
       }
     }
 
-    // @BeforeClass
-    for (Method method : classModel.getAnnotatedLeafMethods(BeforeClass.class).keySet()) {
+    // @BeforeAll
+    for (Method method : classModel.getAnnotatedLeafMethods(BeforeAll.class).keySet()) {
       Validation.checkThat(method)
-        .describedAs("@BeforeClass method " + suiteClass.getName() + "#" + method.getName())
+        .describedAs("@BeforeAll method " + suiteClass.getName() + "#" + method.getName())
         .isStatic()
         .hasArgsCount(0);
     }
 
-    // @AfterClass
-    for (Method method : classModel.getAnnotatedLeafMethods(AfterClass.class).keySet()) {
+    // @AfterAll
+    for (Method method : classModel.getAnnotatedLeafMethods(AfterAll.class).keySet()) {
       Validation.checkThat(method)
-        .describedAs("@AfterClass method " + suiteClass.getName() + "#" + method.getName())
+        .describedAs("@AfterAll method " + suiteClass.getName() + "#" + method.getName())
         .isStatic()
         .hasArgsCount(0);
     }
 
-    // @Before
-    for (Method method : classModel.getAnnotatedLeafMethods(Before.class).keySet()) {
+    // @BeforeEach
+    for (Method method : classModel.getAnnotatedLeafMethods(BeforeEach.class).keySet()) {
       Validation.checkThat(method)
-        .describedAs("@Before method " + suiteClass.getName() + "#" + method.getName())
+        .describedAs("@BeforeEach method " + suiteClass.getName() + "#" + method.getName())
         .isNotStatic()
         .hasArgsCount(0);
     }
 
-    // @After
-    for (Method method : classModel.getAnnotatedLeafMethods(After.class).keySet()) {
+    // @AfterEach
+    for (Method method : classModel.getAnnotatedLeafMethods(AfterEach.class).keySet()) {
       Validation.checkThat(method)
-        .describedAs("@After method " + suiteClass.getName() + "#" + method.getName())
+        .describedAs("@AfterEach method " + suiteClass.getName() + "#" + method.getName())
         .isNotStatic()
         .hasArgsCount(0);
     }
