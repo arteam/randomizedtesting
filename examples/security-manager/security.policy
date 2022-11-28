@@ -7,17 +7,25 @@ grant codeBase "file:${{java.ext.dirs}}/*" {
   permission java.security.AllPermission;
 };
 
-//// permission for the junit4 jar
-grant codeBase "${junit4.jar.url}" {
+grant {
+  // Surefire
+  permission java.lang.management.ManagementPermission "monitor";
+  permission java.util.PropertyPermission "basedir", "write";
+  permission java.util.PropertyPermission "idea.version", "write";
+  permission java.util.PropertyPermission "user.dir", "write";
+  permission java.util.PropertyPermission "localRepository", "write";
+  permission java.util.PropertyPermission "surefire.real.class.path", "write";
+  permission java.util.PropertyPermission "java.class.path", "write";
+  permission java.util.PropertyPermission "surefire.test.class.path", "write";
+
+  //// permission for the junit4 jar
   // needed for io stream handling
   permission java.lang.RuntimePermission "setIO";
   // workaround for junit access control context bug in processing
   // class test request.
   permission java.lang.RuntimePermission "accessDeclaredMembers";
-};
 
-//// permissions for the randomized runner jar
-grant codeBase "${randomizedtesting.jar.url}" {
+  //// permissions for the randomized runner jar
   // optionally needed for access to private test methods (e.g. beforeClass)
   permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
   // needed to handle uncaught exceptions from other threads
@@ -28,16 +36,12 @@ grant codeBase "${randomizedtesting.jar.url}" {
   permission java.lang.RuntimePermission "accessDeclaredMembers";
   // needed for ThreadLeakControl
   permission java.lang.RuntimePermission "getStackTrace";
-};
 
-//// permissions for the junit jar
-grant codeBase "${junit.jar.url}" {
+  //// permissions for the junit jar
   // needed for TestClass creation
   permission java.lang.RuntimePermission "accessDeclaredMembers";
-};
 
-//// Test class permission: we want this to be minimal!
-grant {
+  //// Test class permission: we want this to be minimal!
   permission java.util.PropertyPermission "*", "read";
 
   //// Java7 and up.
