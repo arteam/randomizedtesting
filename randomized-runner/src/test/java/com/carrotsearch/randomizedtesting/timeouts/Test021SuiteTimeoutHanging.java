@@ -7,8 +7,8 @@ import com.carrotsearch.randomizedtesting.WithNestedTestClass;
 import com.carrotsearch.randomizedtesting.annotations.*;
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakScope.Scope;
 import org.assertj.core.api.Assertions;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.notification.Failure;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class Test021SuiteTimeoutHanging extends WithNestedTestClass {
       throw new Exception();
     }
 
-    @BeforeClass
+    @BeforeAll
     private static void setup() {
       assumeRunningNested();
     }

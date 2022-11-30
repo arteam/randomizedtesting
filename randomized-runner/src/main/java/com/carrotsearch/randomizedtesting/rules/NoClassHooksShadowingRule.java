@@ -17,16 +17,16 @@ package com.carrotsearch.randomizedtesting.rules;
  * limitations under the License.
  */
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 /**
- * Don't allow {@link BeforeClass} and {@link AfterClass} hook shadowing as it is most
+ * Don't allow {@link BeforeAll} and {@link AfterAll} hook shadowing as it is most
  * likely a user error. JUnit rules for shadowed hook methods are weird.
  */
 public class NoClassHooksShadowingRule extends NoShadowingOrOverridesOnMethodsRule {
   public NoClassHooksShadowingRule() {
-    super(BeforeClass.class, AfterClass.class);
+    super(BeforeAll.class, AfterAll.class);
   }
 }
 

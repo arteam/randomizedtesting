@@ -66,13 +66,14 @@
     <gpg.passphrase></gpg.passphrase>
 
     <version.junit>4.13.1</version.junit>
+    <version.junit5>5.9.1</version.junit5>
     <version.ant>1.10.11</version.ant>
     <version.assertj>2.2.0</version.assertj>
 
     <version.maven-enforcer-plugin>3.0.0-M1</version.maven-enforcer-plugin>
     <version.maven-clean-plugin>3.0.0</version.maven-clean-plugin>
     <version.maven-javadoc-plugin>3.0.0</version.maven-javadoc-plugin>
-    <version.maven-surefire-plugin>3.0.0-M1</version.maven-surefire-plugin>
+    <version.maven-surefire-plugin>3.0.0-M6</version.maven-surefire-plugin>
     <version.forbiddenapis>2.5</version.forbiddenapis>
   </properties>
 
@@ -83,13 +84,11 @@
 
   <dependencyManagement>
     <dependencies>
-
       <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>${version.junit}</version>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>${version.junit5}</version>
       </dependency>
-
       <dependency>
         <groupId>org.assertj</groupId>
         <artifactId>assertj-core</artifactId>
@@ -237,7 +236,7 @@
           <artifactId>maven-invoker-plugin</artifactId>
           <version>2.0.0</version>
         </plugin>
-        
+
         <plugin>
           <groupId>de.thetaphi</groupId>
           <artifactId>forbiddenapis</artifactId>
@@ -266,17 +265,17 @@
                   <bundledSignature>jdk-non-portable</bundledSignature>
                 </bundledSignatures>
                 <signaturesArtifacts>
-                <!-- 
+                <!--
                   <signaturesArtifact>
                     <groupId>com.carrotsearch.lingo4g</groupId>
-                    <artifactId>lingo4g-public-forbiddenapis</artifactId> 
+                    <artifactId>lingo4g-public-forbiddenapis</artifactId>
                     <version>${project.version}</version>
                     <type>jar</type>
                     <path>com/carrotsearch/lingo4g/forbiddenapis/java-signatures.txt</path>
                   </signaturesArtifact>
                   <signaturesArtifact>
                     <groupId>com.carrotsearch.lingo4g</groupId>
-                    <artifactId>lingo4g-public-forbiddenapis</artifactId> 
+                    <artifactId>lingo4g-public-forbiddenapis</artifactId>
                     <version>${project.version}</version>
                     <type>jar</type>
                     <path>com/carrotsearch/lingo4g/forbiddenapis/thirdparty-signatures.txt</path>
@@ -286,7 +285,7 @@
               </configuration>
             </execution>
           </executions>
-        </plugin>        
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
@@ -310,7 +309,7 @@
       </activation>
 
       <build>
-        <!-- 
+        <!--
         Disable for now, we have target-relative classpaths in tests
         <directory>target/eclipse</directory>
          -->

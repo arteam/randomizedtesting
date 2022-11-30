@@ -2,9 +2,9 @@ package com.carrotsearch.examples.randomizedrunner;
 
 import java.util.concurrent.*;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
 import com.carrotsearch.randomizedtesting.RandomizedTest;
@@ -77,7 +77,7 @@ public class Test010Lingering extends RandomizedTest {
 
     executor.shutdown();
     executor.awaitTermination(1, TimeUnit.SECONDS);
-    Assert.assertTrue(executor.isShutdown());
-    Assert.assertTrue(executor.isTerminated());
+    Assertions.assertTrue(executor.isShutdown());
+    Assertions.assertTrue(executor.isTerminated());
   }
 }

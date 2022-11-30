@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Request;
 
@@ -17,21 +17,21 @@ public class PrivateHooksPropagation {
   final static List<String> order = new ArrayList<>();
 
   public static class Super extends RandomizedTest {
-    @BeforeClass private   static void beforeClass1() { order.add("super.beforeclass1"); }
-    @BeforeClass protected static void beforeClass2() { order.add("super.beforeclass2"); }
+    @BeforeAll private   static void beforeClass1() { order.add("super.beforeclass1"); }
+    @BeforeAll protected static void beforeClass2() { order.add("super.beforeclass2"); }
 
-    @Before      private   void before1() { order.add("super.before1"); }
-    @Before      protected void before2() { order.add("super.before2"); }
+    @BeforeEach      private   void before1() { order.add("super.before1"); }
+    @BeforeEach      protected void before2() { order.add("super.before2"); }
 
     @Test        public void testMethod1() { order.add("super.testMethod1"); }
   }
 
   public static class Sub extends Super {
-    @BeforeClass private   static void beforeClass1() { order.add("sub.beforeclass1"); }
-    @BeforeClass protected static void beforeClass2() { order.add("sub.beforeclass2"); }
+    @BeforeAll private   static void beforeClass1() { order.add("sub.beforeclass1"); }
+    @BeforeAll protected static void beforeClass2() { order.add("sub.beforeclass2"); }
 
-    @Before      private   void before1() { order.add("sub.before1"); }
-    @Before      protected void before2() { order.add("sub.before2"); }
+    @BeforeEach      private   void before1() { order.add("sub.before1"); }
+    @BeforeEach      protected void before2() { order.add("sub.before2"); }
   }
 
   @Test

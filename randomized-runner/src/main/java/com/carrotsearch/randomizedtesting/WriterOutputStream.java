@@ -225,7 +225,7 @@ public class WriterOutputStream extends OutputStream {
 
     /**
      * Flush the stream. Any remaining content accumulated in the output buffer
-     * will be written to the underlying {@link Writer}. After that
+     * will be written to the underlying {@link Writer}. AfterEach that
      * {@link Writer#flush()} will be called. 
      * @throws IOException if an I/O error occurs
      */
@@ -237,7 +237,7 @@ public class WriterOutputStream extends OutputStream {
 
     /**
      * Close the stream. Any remaining content accumulated in the output buffer
-     * will be written to the underlying {@link Writer}. After that
+     * will be written to the underlying {@link Writer}. AfterEach that
      * {@link Writer#close()} will be called. 
      * @throws IOException if an I/O error occurs
      */

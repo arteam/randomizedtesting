@@ -1,8 +1,8 @@
 package com.carrotsearch.randomizedtesting.contracts;
 
-import org.junit.Assume;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 import com.carrotsearch.randomizedtesting.annotations.Repeat;
@@ -21,7 +21,7 @@ public class TestMethodFilteringInIDEs extends RandomizedTest {
 
   @Test
   public void testIgnoredByAssumption() {
-    Assume.assumeTrue(false);
+    Assumptions.assumeTrue(false);
   }
 
   @Ignore

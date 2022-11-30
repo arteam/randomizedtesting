@@ -2,12 +2,12 @@ package com.carrotsearch.randomizedtesting.rules;
 
 import java.util.Properties;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.*;
@@ -45,14 +45,14 @@ public class TestSystemPropertiesInvariantRule extends WithNestedTestClass {
   }
   
   public static class InBeforeClass extends Base {
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
       System.setProperty(PROP_KEY1, VALUE1);
     }
   }
   
   public static class InAfterClass extends Base {
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
       System.setProperty(PROP_KEY1, VALUE1);
     }
@@ -82,7 +82,7 @@ public class TestSystemPropertiesInvariantRule extends WithNestedTestClass {
 
       Properties properties = System.getProperties();
       properties.put(PROP_KEY1, new Object());
-      Assert.assertTrue(System.getProperties().get(PROP_KEY1) != null);
+      Assertions.assertTrue(System.getProperties().get(PROP_KEY1) != null);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class TestSystemPropertiesInvariantRule extends WithNestedTestClass {
       testMethod1();
     }
 
-    @AfterClass
+    @AfterAll
     public static void cleanup() {
       System.getProperties().remove(PROP_KEY1);
     }
@@ -99,36 +99,36 @@ public class TestSystemPropertiesInvariantRule extends WithNestedTestClass {
   @Test
   public void testRuleInvariantBeforeClass() {
     FullResult runClasses = runTests(InBeforeClass.class);
-    Assert.assertEquals(1, runClasses.getFailureCount());
-    Assert.assertTrue(runClasses.getFailures().get(0).getMessage()
+    Assertions.assertEquals(1, runClasses.getFailureCount());
+    Assertions.assertTrue(runClasses.getFailures().get(0).getMessage()
         .contains(PROP_KEY1));
-    Assert.assertNull(System.getProperty(PROP_KEY1));
+    Assertions.assertNull(System.getProperty(PROP_KEY1));
   }
   
   @Test
   public void testRuleInvariantAfterClass() {
     FullResult runClasses = runTests(InAfterClass.class);
-    Assert.assertEquals(1, runClasses.getFailureCount());
-    Assert.assertTrue(runClasses.getFailures().get(0).getMessage()
+    Assertions.assertEquals(1, runClasses.getFailureCount());
+    Assertions.assertTrue(runClasses.getFailures().get(0).getMessage()
         .contains(PROP_KEY1));
-    Assert.assertNull(System.getProperty(PROP_KEY1));
+    Assertions.assertNull(System.getProperty(PROP_KEY1));
   }
   
   @Test
   public void testRuleInvariantInTestMethod() {
     FullResult runClasses = runTests(InTestMethod.class);
-    Assert.assertEquals(2, runClasses.getFailureCount());
+    Assertions.assertEquals(2, runClasses.getFailureCount());
     for (Failure f : runClasses.getFailures()) {
-      Assert.assertTrue(f.getMessage().contains(PROP_KEY1));
+      Assertions.assertTrue(f.getMessage().contains(PROP_KEY1));
     }
-    Assert.assertNull(System.getProperty(PROP_KEY1));
+    Assertions.assertNull(System.getProperty(PROP_KEY1));
   }
   
   @Test
   public void testNonStringProperties() {
     FullResult runClasses = runTests(NonStringProperties.class);
-    Assert.assertEquals(1, runClasses.getFailureCount());
-    Assert.assertTrue(runClasses.getFailures().get(0).getMessage().contains("Will pass"));
-    Assert.assertEquals(3, runClasses.getRunCount());
+    Assertions.assertEquals(1, runClasses.getFailureCount());
+    Assertions.assertTrue(runClasses.getFailures().get(0).getMessage().contains("Will pass"));
+    Assertions.assertEquals(3, runClasses.getRunCount());
   }
 }

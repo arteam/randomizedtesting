@@ -1,8 +1,8 @@
 package com.carrotsearch.randomizedtesting.timeouts;
 
-import org.junit.After;
-import org.junit.Test;
-import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 import com.carrotsearch.randomizedtesting.SysGlobals;
@@ -40,8 +40,8 @@ public class Test015TimeoutOverride extends WithNestedTestClass {
     long start = System.nanoTime();
     FullResult result = runTests(Nested.class);
     long end = System.nanoTime();
-    Assert.assertEquals(1, result.getFailureCount());
-    Assert.assertTrue(TimeUnit.NANOSECONDS.toMillis(end - start) < 3000);
+    Assertions.assertEquals(1, result.getFailureCount());
+    Assertions.assertTrue(TimeUnit.NANOSECONDS.toMillis(end - start) < 3000);
   }
   
   @Test
@@ -51,11 +51,11 @@ public class Test015TimeoutOverride extends WithNestedTestClass {
     long start = System.nanoTime();
     FullResult result = runTests(Nested2.class);
     long end = System.nanoTime();
-    Assert.assertEquals(0, result.getFailureCount());
-    Assert.assertTrue(TimeUnit.NANOSECONDS.toMillis(end - start) > 900);
+    Assertions.assertEquals(0, result.getFailureCount());
+    Assertions.assertTrue(TimeUnit.NANOSECONDS.toMillis(end - start) > 900);
   }
   
-  @After
+  @AfterEach
   public void cleanup() {
     System.clearProperty(SysGlobals.SYSPROP_TIMEOUT());
   }

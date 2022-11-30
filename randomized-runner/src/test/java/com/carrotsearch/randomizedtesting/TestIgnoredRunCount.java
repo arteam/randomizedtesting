@@ -12,7 +12,7 @@ public class TestIgnoredRunCount extends WithNestedTestClass {
     public void ignored() {}
   }
 
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   public static class Nested2 {
     @Test @Ignore
     public void ignored() {}

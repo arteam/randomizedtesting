@@ -3,7 +3,7 @@ package com.carrotsearch.examples.randomizedrunner;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 import com.carrotsearch.randomizedtesting.TestMethodAndParams;

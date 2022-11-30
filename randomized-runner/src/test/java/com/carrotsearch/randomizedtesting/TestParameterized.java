@@ -1,13 +1,13 @@
 package com.carrotsearch.randomizedtesting;
 
-import static org.junit.Assert.*;
+import static org.junit.Assertions.*;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.carrotsearch.randomizedtesting.annotations.Name;
 import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
@@ -71,7 +71,7 @@ public class TestParameterized extends WithNestedTestClass {
     Assertions.assertThat(r.getFailures()).hasSize(1);
     Assertions.assertThat(r.getFailures().get(0).getDescription().getMethodName())
       .contains("paramName=xyz");
-    Assert.assertEquals("failing", RandomizedRunner.methodName(r.getFailures().get(0).getDescription()));
+    Assertions.assertEquals("failing", RandomizedRunner.methodName(r.getFailures().get(0).getDescription()));
   }
   
   public static class Nested3 extends Nested2 {

@@ -1,7 +1,5 @@
 package com.carrotsearch.randomizedtesting;
 
-import org.junit.runner.Description;
-
 /**
  * A filter for {@link Description#getClassName()}.
  */

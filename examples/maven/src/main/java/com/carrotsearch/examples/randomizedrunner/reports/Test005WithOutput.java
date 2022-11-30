@@ -1,6 +1,6 @@
 package com.carrotsearch.examples.randomizedrunner.reports;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 
 /**

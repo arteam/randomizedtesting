@@ -1,23 +1,23 @@
 package com.carrotsearch.randomizedtesting;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.notification.Failure;
 
 import com.carrotsearch.randomizedtesting.annotations.Seed;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * {@link RandomizedRunner} can augment stack traces to include seed info. Check
  * if it works.
  */
 public class TestStackAugmentation extends WithNestedTestClass {
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   @Seed("deadbeef")
   public static class Nested {
     @Test @Seed("cafebabe")
@@ -43,10 +43,10 @@ public class TestStackAugmentation extends WithNestedTestClass {
     assertTrue("[DEADBEEF:CAFEBABE]".compareToIgnoreCase(seedFromThrowable) == 0);
   }
 
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   @Seed("deadbeef")
   public static class Nested2 {
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
       assumeRunningNested();
       throw new Error("beforeclass.");
@@ -68,10 +68,10 @@ public class TestStackAugmentation extends WithNestedTestClass {
     assertTrue(f.getTrace(), "[DEADBEEF]".compareToIgnoreCase(seedFromThrowable) == 0);
   }
 
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   @Seed("deadbeef")
   public static class Nested3 {
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
       assumeRunningNested();
       throw new Error("afterclass.");

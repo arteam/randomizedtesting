@@ -54,11 +54,11 @@ public class TestFailurePropagationCompatibility extends WithNestedTestClass {
         .outerRule(new MaybeFailRule())
         .around(new MaybeFailRule());
 
-    @BeforeClass public static void beforeClass1() { maybeFail(); }
-    @Before      public        void before()       { maybeFail(); }
+    @BeforeAll public static void beforeClass1() { maybeFail(); }
+    @BeforeEach      public        void before()       { maybeFail(); }
     @Test        public        void test()         { maybeFail(); }
-    @After       public        void after()        { maybeFail(); }
-    @AfterClass  public static void afterClass()   { maybeFail(); }
+    @AfterEach       public        void after()        { maybeFail(); }
+    @AfterAll  public static void afterClass()   { maybeFail(); }
   }
 
   public static class FailRandomly2 extends FailRandomly1 {
@@ -76,13 +76,13 @@ public class TestFailurePropagationCompatibility extends WithNestedTestClass {
         .outerRule(new MaybeFailRule())
         .around(new MaybeFailRule());
 
-    @BeforeClass public static void beforeClass2()  { maybeFail(); }
-    @Before      public        void before2()       { maybeFail(); }
-    @After       public        void after2()        { maybeFail(); }
-    @AfterClass  public static void afterClass2()   { maybeFail(); }
+    @BeforeAll public static void beforeClass2()  { maybeFail(); }
+    @BeforeEach      public        void before2()       { maybeFail(); }
+    @AfterEach       public        void after2()        { maybeFail(); }
+    @AfterAll  public static void afterClass2()   { maybeFail(); }
   }
   
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   public static class FailRandomly3 extends FailRandomly2 {
   }
 
@@ -122,13 +122,13 @@ public class TestFailurePropagationCompatibility extends WithNestedTestClass {
           System.out.println(traceJunit4);
           System.out.println("--- RandomizedRunner:");
           System.out.println(traceRR);
-          Assert.fail();
+          Assertions.fail();
         }
       }
     }
   }
   
-  @AfterClass
+  @AfterAll
   public static void cleanup() {
     random = null;
   }

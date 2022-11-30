@@ -3,10 +3,10 @@ package com.carrotsearch.randomizedtesting;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.MethodRule;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
@@ -128,6 +128,6 @@ public class TestRules extends WithNestedTestClass {
     List<String> order2 = order;
     order = null;
 
-    Assert.assertEquals(order1, order2);
+    Assertions.assertEquals(order1, order2);
   }
 }

@@ -3,11 +3,11 @@ package com.carrotsearch.randomizedtesting.contracts;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -39,12 +39,12 @@ public class TestClassRules extends WithNestedTestClass {
       }
     });
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
       order.add("before-class");
     }
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
       order.add("after-class");
     }
@@ -70,6 +70,6 @@ public class TestClassRules extends WithNestedTestClass {
     List<String> order2 = new ArrayList<>(order);
     order.clear();
     
-    Assert.assertEquals(order1, order2);
+    Assertions.assertEquals(order1, order2);
   }
 }

@@ -2,10 +2,10 @@ package com.carrotsearch.examples.randomizedrunner.reports;
 
 import java.util.Arrays;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.MultipleFailureException;
@@ -40,12 +40,12 @@ public class Test003MultipleFailures {
     throw new RuntimeException("testCase");
   }
 
-  @After
+  @AfterEach
   public void after() {
     throw new RuntimeException("after");
   }
 
-  @AfterClass
+  @AfterAll
   public static void afterClass() {
     throw new RuntimeException("afterClass");
   }

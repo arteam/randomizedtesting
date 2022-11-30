@@ -1,16 +1,16 @@
 package com.carrotsearch.examples.randomizedrunner.reports;
 
 import org.junit.*;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
 
 /** */
-@RunWith(RandomizedRunner.class)
+@ExtendWith(RandomizedRunner.class)
 public class Test008BeforeClassAssumptionRR {
-  @BeforeClass
+  @BeforeAll
   public static void assumeMe() {
-    Assume.assumeTrue(false);
+    Assumptions.assumeTrue(false);
   }
 
   @Test

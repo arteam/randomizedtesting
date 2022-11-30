@@ -6,7 +6,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.junit.runner.notification.RunListener;
+import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.runner.notification.RunNotifier;
 
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
@@ -26,5 +26,5 @@ public @interface Listeners {
    * An array of listener classes. These classes must be instantiable (public, static, no-args
    * constructor, etc.).
    */
-  Class<? extends RunListener>[] value();
+  Class<? extends TestExecutionListener>[] value();
 }

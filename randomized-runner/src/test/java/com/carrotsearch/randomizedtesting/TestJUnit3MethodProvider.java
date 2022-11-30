@@ -1,7 +1,7 @@
 package com.carrotsearch.randomizedtesting;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runners.model.InitializationError;
@@ -35,8 +35,8 @@ public class TestJUnit3MethodProvider {
 
     for (Class<?> cl : valid) {
       Result r = new JUnitCore().run(new RandomizedRunner(cl));
-      Assert.assertEquals(0, r.getFailureCount());
-      Assert.assertEquals(1, r.getRunCount());
+      Assertions.assertEquals(0, r.getFailureCount());
+      Assertions.assertEquals(1, r.getRunCount());
     }
   }
 
@@ -51,7 +51,7 @@ public class TestJUnit3MethodProvider {
     for (Class<?> cl : invalid) {
       try {
         new JUnitCore().run(new RandomizedRunner(cl));
-        Assert.fail("Expected to fail for: " + cl);
+        Assertions.fail("Expected to fail for: " + cl);
       } catch (InitializationError e) {
         // expected.
       }
@@ -65,7 +65,7 @@ public class TestJUnit3MethodProvider {
   @Test
   public void testJUnit3Overrides() throws Exception {
     Result r = new JUnitCore().run(new RandomizedRunner(S3.class));
-    Assert.assertEquals(0, r.getFailureCount());
-    Assert.assertEquals(1, r.getRunCount());
+    Assertions.assertEquals(0, r.getFailureCount());
+    Assertions.assertEquals(1, r.getRunCount());
   }  
 }

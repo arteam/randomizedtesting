@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.Description;
-import org.junit.runner.notification.RunListener;
+import org.junit.runner.notification.TestExecutionListener;
 
 import com.carrotsearch.randomizedtesting.annotations.Listeners;
 import com.carrotsearch.randomizedtesting.annotations.Name;
@@ -24,7 +24,7 @@ public class TestRepeatTestWithComplexDescription extends WithNestedTestClass {
 
   static ArrayList<String> buf;
 
-  public static class CaptureFailuresListener extends RunListener {
+  public static class CaptureFailuresListener extends TestExecutionListener {
     @Override
     public void testStarted(Description description) throws Exception {
       buf.add(description.getMethodName());

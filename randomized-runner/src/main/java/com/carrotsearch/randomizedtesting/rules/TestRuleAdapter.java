@@ -2,8 +2,8 @@ package com.carrotsearch.randomizedtesting.rules;
 
 import java.util.List;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -13,7 +13,7 @@ import org.junit.runners.model.Statement;
 /**
  * An abstract {@link TestRule} that guarantees the execution of
  * {@link #afterAlways} even if an exception has been thrown from delegate
- * {@link Statement}. This is much like {@link AfterClass} or {@link After}
+ * {@link Statement}. This is much like {@link AfterAll} or {@link AfterEach}
  * annotations but can be used with {@link RuleChain} to guarantee the order of
  * execution.
  */

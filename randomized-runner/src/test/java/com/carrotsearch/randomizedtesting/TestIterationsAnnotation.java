@@ -1,9 +1,9 @@
 package com.carrotsearch.randomizedtesting;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.carrotsearch.randomizedtesting.annotations.Repeat;
 
@@ -18,13 +18,13 @@ public class TestIterationsAnnotation extends RandomizedTest {
     iterations++;
   }
 
-  @BeforeClass
+  @BeforeAll
   public static void clean() {
     iterations = 0;
   }
   
-  @AfterClass
+  @AfterAll
   public static void cleanupAfter() {
-    Assert.assertEquals(10, iterations);
+    Assertions.assertEquals(10, iterations);
   }
 }

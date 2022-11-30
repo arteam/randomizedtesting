@@ -17,17 +17,17 @@ package com.carrotsearch.randomizedtesting.rules;
  * limitations under the License.
  */
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
- * Don't allow {@link Before} and {@link After} hook overrides as it is most
+ * Don't allow {@link BeforeEach} and {@link AfterEach} hook overrides as it is most
  * likely a user error and will result in superclass methods not being called
  * (requires manual chaining). 
  */
 public class NoInstanceHooksOverridesRule extends NoShadowingOrOverridesOnMethodsRule {
   public NoInstanceHooksOverridesRule() {
-    super(Before.class, After.class);
+    super(BeforeEach.class, AfterEach.class);
   }
 }
 

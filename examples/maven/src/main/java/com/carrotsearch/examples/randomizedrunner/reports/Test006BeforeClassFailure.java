@@ -1,15 +1,15 @@
 package com.carrotsearch.examples.randomizedrunner.reports;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /** */
 public class Test006BeforeClassFailure {
-  @BeforeClass
+  @BeforeAll
   public static void failOnMe() {
-    Assert.assertTrue(false);
+    Assertions.assertTrue(false);
   }
 
   @Test

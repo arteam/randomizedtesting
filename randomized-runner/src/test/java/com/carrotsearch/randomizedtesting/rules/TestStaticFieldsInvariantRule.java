@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -48,7 +48,7 @@ public class TestStaticFieldsInvariantRule extends WithNestedTestClass {
   public static class Smaller extends Base {
     static byte [] field0; 
     
-    @BeforeClass
+    @BeforeAll
     private static void setup() {
       field0 = new byte [LEAK_THRESHOLD / 2];
     }
@@ -61,7 +61,7 @@ public class TestStaticFieldsInvariantRule extends WithNestedTestClass {
     static long field4;
     final static long [] field5 = new long [1024];
 
-    @BeforeClass
+    @BeforeAll
     private static void setup() {
       field1 = new byte [LEAK_THRESHOLD / 2];
       field2 = new byte [100];
@@ -121,7 +121,7 @@ public class TestStaticFieldsInvariantRule extends WithNestedTestClass {
   public static class FailsJava9 extends Base {
     static Holder field0; 
     
-    @BeforeClass
+    @BeforeAll
     private static void setup() throws Exception {
       field0 = new Holder();
     }

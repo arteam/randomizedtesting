@@ -1,7 +1,7 @@
 package com.carrotsearch.examples.randomizedrunner;
 
-import org.junit.Assume;
-import org.junit.Test;
+import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.api.Test;
 
 import com.carrotsearch.randomizedtesting.*;
 import com.carrotsearch.randomizedtesting.annotations.Nightly;
@@ -36,7 +36,7 @@ public class Test011NightlyTests extends RandomizedTest {
   @Test
   public void nightlyOnlyWithAssume() throws Exception {
     // Only run if Nightly test group is explicitly enabled using -Dtests.nightly=true
-    Assume.assumeTrue(RandomizedContext.current().getGroupEvaluator().isGroupEnabled(Nightly.class));
+    Assumptions.assumeTrue(RandomizedContext.current().getGroupEvaluator().isGroupEnabled(Nightly.class));
   }
 
   @Test

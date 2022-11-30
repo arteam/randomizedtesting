@@ -1,7 +1,7 @@
 package com.carrotsearch.randomizedtesting;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test {@link Test#expected()}.

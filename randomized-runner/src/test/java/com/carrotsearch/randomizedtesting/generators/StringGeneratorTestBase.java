@@ -1,11 +1,11 @@
 package com.carrotsearch.randomizedtesting.generators;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 import com.carrotsearch.randomizedtesting.annotations.Repeat;
 
-import static org.junit.Assert.*;
+import static org.junit.Assertions.*;
 
 /**
  * Base class for testing {@link StringGenerator}s.
