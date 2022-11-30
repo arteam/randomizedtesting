@@ -82,7 +82,7 @@ public class TestFailurePropagationCompatibility extends WithNestedTestClass {
     @AfterAll  public static void afterClass2()   { maybeFail(); }
   }
   
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   public static class FailRandomly3 extends FailRandomly2 {
   }
 

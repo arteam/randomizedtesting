@@ -3,16 +3,16 @@ package com.carrotsearch.randomizedtesting.listeners;
 import org.junit.internal.AssumptionViolatedException;
 import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
-import org.junit.runner.notification.RunListener;
+import org.junit.runner.notification.TestExecutionListener;
 
 import com.carrotsearch.randomizedtesting.*;
 import com.carrotsearch.randomizedtesting.annotations.SuppressForbidden;
 
 /**
- * A {@link RunListener} that emits to {@link System#err} a string with command
+ * A {@link TestExecutionListener} that emits to {@link System#err} a string with command
  * line parameters allowing quick test re-run under ANT command line.     
  */
-public class ReproduceInfoPrinter extends RunListener {
+public class ReproduceInfoPrinter extends TestExecutionListener {
   @Override
   @SuppressForbidden("Legitimate use of syserr.")
   public void testFailure(Failure failure) throws Exception {

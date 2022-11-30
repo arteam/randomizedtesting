@@ -19,7 +19,7 @@ import static com.carrotsearch.randomizedtesting.SysGlobals.*;
 public class TestClassMethodFiltering extends WithNestedTestClass {
   static List<String> methods = new ArrayList<String>();
 
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   public static class Nested1 {
     @BeforeAll
     public static void beforeClass() {
@@ -39,7 +39,7 @@ public class TestClassMethodFiltering extends WithNestedTestClass {
     }    
   }
 
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   public static class Nested2 {
     @BeforeAll
     public static void beforeClass() {

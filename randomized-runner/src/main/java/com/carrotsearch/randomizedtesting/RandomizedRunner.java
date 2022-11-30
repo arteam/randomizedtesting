@@ -50,7 +50,7 @@ import org.junit.runner.manipulation.Filter;
 import org.junit.runner.manipulation.Filterable;
 import org.junit.runner.manipulation.NoTestsRemainException;
 import org.junit.runner.notification.Failure;
-import org.junit.runner.notification.RunListener;
+import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.FrameworkField;
 import org.junit.runners.model.FrameworkMethod;
@@ -256,7 +256,7 @@ public final class RandomizedRunner implements Extension, Filterable {
   /** 
    * @see #subscribeListeners(RunNotifier) 
    */
-  private final List<RunListener> autoListeners = new ArrayList<RunListener>();
+  private final List<TestExecutionListener> autoListeners = new ArrayList<TestExecutionListener>();
 
   /**
    * @see SysGlobals#SYSPROP_APPEND_SEED
@@ -676,7 +676,7 @@ public final class RandomizedRunner implements Extension, Filterable {
    */
   private void runSuite(final RandomizedContext context, final RunNotifier notifier) {
     final Result result = new Result();
-    final RunListener accounting = result.createListener();
+    final TestExecutionListener accounting = result.createListener();
     notifier.addListener(accounting);
 
     final Randomness classRandomness = runnerRandomness.clone(Thread.currentThread());
@@ -686,11 +686,11 @@ public final class RandomizedRunner implements Extension, Filterable {
       subscribeListeners(notifier);
 
       // Fire a synthetic "suite started" event.
-      for (RunListener r : autoListeners) { 
+      for (TestExecutionListener r : autoListeners) {
         try {
           r.testRunStarted(suiteDescription);
         } catch (Throwable e) {
-          logger.log(Level.SEVERE, "Panic: RunListener hook shouldn't throw exceptions.", e);
+          logger.log(Level.SEVERE, "Panic: TestExecutionListener hook shouldn't throw exceptions.", e);
         }
       }
 
@@ -737,11 +737,11 @@ public final class RandomizedRunner implements Extension, Filterable {
     }
 
     // Fire a synthetic "suite ended" event and unsubscribe listeners.
-    for (RunListener r : autoListeners) {
+    for (TestExecutionListener r : autoListeners) {
       try {
         r.testRunFinished(result);
       } catch (Throwable e) {
-        logger.log(Level.SEVERE, "Panic: RunListener hook shouldn't throw exceptions.", e);
+        logger.log(Level.SEVERE, "Panic: TestExecutionListener hook shouldn't throw exceptions.", e);
       }
     }
 
@@ -1154,9 +1154,9 @@ public final class RandomizedRunner implements Extension, Filterable {
   /** Subscribe annotation listeners to the notifier. */
   private void subscribeListeners(RunNotifier notifier) {
     for (Listeners ann : getAnnotationsFromClassHierarchy(suiteClass, Listeners.class)) {
-      for (Class<? extends RunListener> clazz : ann.value()) {
+      for (Class<? extends TestExecutionListener> clazz : ann.value()) {
         try {
-          RunListener listener = clazz.newInstance();
+          TestExecutionListener listener = clazz.newInstance();
           autoListeners.add(listener);
           notifier.addListener(listener);
         } catch (Throwable t) {
@@ -1170,7 +1170,7 @@ public final class RandomizedRunner implements Extension, Filterable {
 
   /** Unsubscribe listeners. */
   private void unsubscribeListeners(RunNotifier notifier) {
-    for (RunListener r : autoListeners)
+    for (TestExecutionListener r : autoListeners)
       notifier.removeListener(r);
   }
 

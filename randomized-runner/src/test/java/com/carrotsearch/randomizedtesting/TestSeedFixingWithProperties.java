@@ -21,7 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class TestSeedFixingWithProperties extends WithNestedTestClass {
   static List<Long> seeds = new ArrayList<Long>();
 
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   public static class Nested {
     @BeforeAll
     public static void staticFixture() {

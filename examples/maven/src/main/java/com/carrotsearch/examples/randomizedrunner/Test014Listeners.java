@@ -3,7 +3,7 @@ package com.carrotsearch.examples.randomizedrunner;
 import org.junit.jupiter.api.Assertions;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.notification.RunListener;
+import org.junit.platform.launcher.TestExecutionListener;
 
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
 import com.carrotsearch.randomizedtesting.RandomizedTest;
@@ -12,7 +12,7 @@ import com.carrotsearch.randomizedtesting.listeners.ReproduceInfoPrinter;
 
 /**
  * {@link RandomizedRunner} respects an on-suite class {@link Listeners}
- * annotation and instantiates classes that implement {@link RunListener}. This
+ * annotation and instantiates classes that implement {@link TestExecutionListener}. This
  * allows custom listener hooks on the suite.
  * 
  * <p>

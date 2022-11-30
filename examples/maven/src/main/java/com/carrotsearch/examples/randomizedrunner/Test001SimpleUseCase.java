@@ -17,7 +17,7 @@ import com.carrotsearch.randomizedtesting.RandomizedRunner;
  * can hide a hook (<code>before()</code>) method to be private 
  * (normal JUnit doesn't allow this). 
  */
-@RunWith(RandomizedRunner.class)
+@ExtendWith(RandomizedRunner.class)
 public class Test001SimpleUseCase {
   @BeforeEach
   private void before() {

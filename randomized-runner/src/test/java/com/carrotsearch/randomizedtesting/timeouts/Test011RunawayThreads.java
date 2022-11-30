@@ -15,7 +15,7 @@ import com.carrotsearch.randomizedtesting.Utils;
 import com.carrotsearch.randomizedtesting.WithNestedTestClass;
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakLingering;
 
-@RunWith(RandomizedRunner.class)
+@ExtendWith(RandomizedRunner.class)
 public class Test011RunawayThreads extends WithNestedTestClass {
   private abstract static class ThreadWithException extends Thread {
     public volatile Throwable throwable;

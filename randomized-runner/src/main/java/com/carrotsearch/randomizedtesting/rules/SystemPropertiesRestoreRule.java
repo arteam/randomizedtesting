@@ -1,12 +1,10 @@
 package com.carrotsearch.randomizedtesting.rules;
 
+import com.carrotsearch.randomizedtesting.TestRule;
+import org.junit.jupiter.api.extension.ExtensionContext;
+
 import java.util.*;
 
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 
 /**
  * A {@link TestRule} which restores system properties from before the nested 
@@ -29,6 +27,8 @@ public class SystemPropertiesRestoreRule implements TestRule {
   /** properties we set up front for the duration of the test */
   private final Map<String, String> setProperties;
 
+
+  TreeMap<String,String> before;
   /**
    * Restores all properties.
    */
@@ -68,27 +68,22 @@ public class SystemPropertiesRestoreRule implements TestRule {
   }
 
   @Override
-  public Statement apply(final Statement s, Description d) {
-    return new Statement() {
-      @Override
-      public void evaluate() throws Throwable {
-        TreeMap<String,String> before = systemPropertiesAsMap();
-        try {
-          for (Map.Entry<String, String> entry : setProperties.entrySet()) {
-            System.setProperty(entry.getKey(), entry.getValue());
-          }
-          s.evaluate();
-        } finally {
-          TreeMap<String,String> after = systemPropertiesAsMap();
-          if (!after.equals(before)) {
-            // Restore original properties.
-            restore(before, after, ignoredProperties);
-          }
-        }
-      }
-    };
+  public void beforeEach(ExtensionContext context) throws Exception {
+    TreeMap<String,String> before = systemPropertiesAsMap();
+    for (Map.Entry<String, String> entry : setProperties.entrySet()) {
+      System.setProperty(entry.getKey(), entry.getValue());
+    }
   }
-  
+
+  @Override
+  public void afterEach(ExtensionContext context) throws Exception {
+    TreeMap<String,String> after = systemPropertiesAsMap();
+    if (!after.equals(before)) {
+      // Restore original properties.
+      restore(before, after, ignoredProperties);
+    }
+  }
+
   private static TreeMap<String,String> cloneAsMap(Properties properties) {
     TreeMap<String,String> result = new TreeMap<String,String>();
     for (Enumeration<?> e = properties.propertyNames(); e.hasMoreElements();) {

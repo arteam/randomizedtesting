@@ -4,18 +4,21 @@ import java.io.PrintStream;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 
-public class PrintEventListener extends RunListener {
+public class PrintEventListener extends SummaryGeneratingListener {
   private final PrintStream out;
   private AtomicInteger assumptions = new AtomicInteger();
 
   public PrintEventListener(PrintStream out) {
     this.out = out;
   }
+
+
   
   @Override
   public void testRunStarted(Description description) throws Exception {

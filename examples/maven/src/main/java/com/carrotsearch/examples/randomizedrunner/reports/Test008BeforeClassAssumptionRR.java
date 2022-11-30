@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
 
 /** */
-@RunWith(RandomizedRunner.class)
+@ExtendWith(RandomizedRunner.class)
 public class Test008BeforeClassAssumptionRR {
   @BeforeAll
   public static void assumeMe() {

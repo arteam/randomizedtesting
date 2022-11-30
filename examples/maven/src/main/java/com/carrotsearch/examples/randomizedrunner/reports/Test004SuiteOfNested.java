@@ -7,7 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
 /**
  * A suite of nested test classes.
  */
-@RunWith(Suite.class)
+@ExtendWith(Suite.class)
 @SuiteClasses({
   Test004SuiteOfNested.Subclass1.class,
   Test004SuiteOfNested.Subclass2.class,

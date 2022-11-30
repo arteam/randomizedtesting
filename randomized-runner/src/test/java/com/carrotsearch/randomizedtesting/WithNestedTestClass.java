@@ -13,6 +13,7 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import java.util.stream.Collectors;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -23,13 +24,20 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.engine.DiscoverySelector;
+import org.junit.platform.engine.discovery.DiscoverySelectors;
+import org.junit.platform.launcher.Launcher;
+import org.junit.platform.launcher.LauncherDiscoveryRequest;
+import org.junit.platform.launcher.TestPlan;
+import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
+import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
-import org.junit.runner.notification.RunListener;
+import org.junit.runner.notification.TestExecutionListener;
 import org.junit.runners.model.Statement;
 
 import com.carrotsearch.randomizedtesting.rules.StatementAdapter;
@@ -324,9 +332,13 @@ public class WithNestedTestClass {
       Thread thread = new Thread() {
         @Override
         public void run() {
-          final JUnitCore core = new JUnitCore();
-          core.addListener(new PrintEventListener(sysout));
-          core.addListener(new RunListener() {
+          LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
+                  .selectors(Arrays.stream(classes).map(DiscoverySelectors::selectClass).collect(Collectors.toList()))
+                  .build();
+          Launcher launcher = LauncherFactory.create();
+          launcher.discover(request);
+          launcher.registerTestExecutionListeners(new PrintEventListener(sysout));
+          launcher.registerTestExecutionListeners(new TestExecutionListener() {
             @Override
             public void testAssumptionFailure(Failure failure) {
               fullResult.assumptionIgnored.incrementAndGet();

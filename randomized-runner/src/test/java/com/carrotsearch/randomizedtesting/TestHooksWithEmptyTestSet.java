@@ -12,7 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
  * ignored test cases behave as if there was something to execute (!).
  */
 public class TestHooksWithEmptyTestSet extends WithNestedTestClass {
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   public static class Nested {
     static boolean beforeClassExecuted;
     static boolean afterClassExecuted;

@@ -10,9 +10,9 @@ import org.junit.runner.*;
 import com.carrotsearch.randomizedtesting.RandomizedRunner;
 import com.carrotsearch.randomizedtesting.WithNestedTestClass;
 
-@RunWith(RandomizedRunner.class)
+@ExtendWith(RandomizedRunner.class)
 public class Test012RunawayThreadsKilledAtOnce extends WithNestedTestClass {
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   public static class NestedClass {
     @Test
     public void lotsOfStubbornThreads() throws Throwable {

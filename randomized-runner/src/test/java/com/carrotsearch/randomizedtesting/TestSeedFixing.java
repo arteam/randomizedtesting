@@ -12,7 +12,7 @@ import com.carrotsearch.randomizedtesting.annotations.Seed;
 /**
  * Seed fixing for static fixtures and/or methods using annotations.
  */
-@RunWith(RandomizedRunner.class)
+@ExtendWith(RandomizedRunner.class)
 @Seed("deadbeef")
 public class TestSeedFixing {
   @BeforeAll

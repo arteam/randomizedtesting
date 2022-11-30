@@ -7,7 +7,6 @@ import java.util.Random;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -27,40 +26,40 @@ public class TestHookMethodOrderWithExceptions extends RandomizedTest {
    * Test superclass.
    */
   public abstract static class Super {
-    static Random rnd; 
-    
+    static Random rnd;
+
     @BeforeAll
     public static void beforeClassSuper() {
       callOrder.add("beforeClassSuper");
       maybeThrowException();
     }
-    
+
     @BeforeEach
     public final void beforeTest() {
       callOrder.add("beforeTestSuper");
       maybeThrowException();
     }
-    
+
     @AfterEach
     public final void afterTest() {
       callOrder.add("afterTestSuper");
       maybeThrowException();
 
     }
-    
+
     @AfterAll
     public static void afterClassSuper() {
       callOrder.add("afterClassSuper");
       maybeThrowException();
     }
-    
+
     public static void maybeThrowException() {
       if (rnd != null && rnd.nextInt(10) == 0) {
         throw new RuntimeException();
       }
     }
   }
-  
+
   /**
    * Test subclass.
    */
@@ -70,46 +69,46 @@ public class TestHookMethodOrderWithExceptions extends RandomizedTest {
       callOrder.add("beforeClassSub");
       maybeThrowException();
     }
-    
+
     @BeforeEach
     public void beforeTestSub() {
       callOrder.add("beforeTestSub");
       maybeThrowException();
     }
-    
+
     @Test
     public void testMethod() {
       callOrder.add("testMethodSub");
       maybeThrowException();
     }
-    
+
     @AfterEach
     public void afterTestSub() {
       callOrder.add("afterTestSub");
       maybeThrowException();
     }
-    
+
     @AfterAll
     public static void afterClass() {
       callOrder.add("afterClassSub");
       maybeThrowException();
     }
   }
-  
+
   @BeforeEach
   public void setup() {
     callOrder.clear();
   }
-  
+
   @AfterEach
   public void cleanup() {
     callOrder.clear();
   }
 
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   public static class WithRandomizedRunner extends SubSub {}
   public static class WithRegularRunner extends SubSub {}
-  
+
   @Test @Repeat(iterations = 20)
   public void checkOrderSameAsJUnit() throws Exception {
     long seed = RandomizedContext.current().getRandomness().getSeed();
@@ -125,7 +124,7 @@ public class TestHookMethodOrderWithExceptions extends RandomizedTest {
     FullResult r2 = WithNestedTestClass.runTests(WithRandomizedRunner.class);
     List<String> rrunnerOrder = new ArrayList<String>(callOrder);
 
-    Assertions.assertEquals(junitOrder, rrunnerOrder);
-    Assertions.assertThat(r1.getRunCount()).isEqualTo(r2.getRunCount());    
+    org.junit.jupiter.api.Assertions.assertEquals(junitOrder, rrunnerOrder);
+    Assertions.assertThat(r1.getRunCount()).isEqualTo(r2.getRunCount());
   }
 }

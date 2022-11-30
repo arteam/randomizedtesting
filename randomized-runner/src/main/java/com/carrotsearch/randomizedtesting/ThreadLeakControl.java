@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
-import org.junit.runner.notification.RunListener;
+import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runner.notification.StoppedByUserException;
 import org.junit.runners.model.MultipleFailureException;
@@ -147,17 +147,17 @@ class ThreadLeakControl {
     Description testInProgress;
 
     @Override
-    public void addListener(RunListener listener) {
+    public void addListener(TestExecutionListener listener) {
       throw new UnsupportedOperationException();
     }
 
     @Override
-    public void addFirstListener(RunListener listener) {
+    public void addFirstListener(TestExecutionListener listener) {
       throw new UnsupportedOperationException();
     }
 
     @Override
-    public void removeListener(RunListener listener) {
+    public void removeListener(TestExecutionListener listener) {
       throw new UnsupportedOperationException();
     }
 

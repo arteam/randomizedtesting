@@ -16,7 +16,7 @@ public class TestSeedDecorator extends WithNestedTestClass {
   private static List<String> runnerSeeds = new ArrayList<String>();
   private static List<String> strings = new ArrayList<String>();
   
-  @RunWith(RandomizedRunner.class)
+  @ExtendWith(RandomizedRunner.class)
   public static class Nested1 {
     @BeforeAll
     public static void generateSequence() {

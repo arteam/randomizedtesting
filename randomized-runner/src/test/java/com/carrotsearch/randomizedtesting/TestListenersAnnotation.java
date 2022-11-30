@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
-import org.junit.runner.notification.RunListener;
+import org.junit.runner.notification.TestExecutionListener;
 
 import com.carrotsearch.randomizedtesting.annotations.Listeners;
 
@@ -21,10 +21,10 @@ public class TestListenersAnnotation extends WithNestedTestClass {
   
   public static List<String> buffer = new ArrayList<String>();
 
-  public static class NoopListener extends RunListener {
+  public static class NoopListener extends TestExecutionListener {
   }
 
-  public static class BufferAppendListener extends RunListener {
+  public static class BufferAppendListener extends TestExecutionListener {
     public void testRunStarted(Description description) throws Exception {
       buffer.add("run started: " + description.getMethodName());
     }

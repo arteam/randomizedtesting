@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 import com.carrotsearch.randomizedtesting.Utils;
@@ -44,7 +43,7 @@ public class Test008SeedsAnnotation extends WithNestedTestClass {
     for (int i = 0; i < N; i++) {
       seeds.clear();
       FullResult result = runTests(Nested.class);
-      Assertions.assertEquals(3 * 2, result.getRunCount());
+      org.junit.jupiter.api.Assertions.assertEquals(3 * 2, result.getRunCount());
       Assertions.assertThat(result.getFailures()).isEmpty();
       for (String s : seeds) {
         if (!counts.containsKey(s))
@@ -60,6 +59,6 @@ public class Test008SeedsAnnotation extends WithNestedTestClass {
     counts.remove("cafebabe");
 
     // Allow for a single collision.
-    Assertions.assertTrue(counts.size() >= N - 1);
+    org.junit.jupiter.api.Assertions.assertTrue(counts.size() >= N - 1);
   }
 }
