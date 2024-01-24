@@ -12,8 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.notification.Failure;
 
-import com.carrotsearch.randomizedtesting.annotations.Timeout;
-
 import org.junit.Assert;
 
 /**
@@ -93,7 +91,7 @@ public class TestOutOfScopeRandomUse extends WithNestedTestClass {
       touchRandom();
     }
 
-    @Test @Timeout(millis = 2000)
+    @Test
     public void method2() throws Exception {
       touchRandom();
       

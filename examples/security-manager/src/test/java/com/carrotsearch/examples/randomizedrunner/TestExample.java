@@ -9,14 +9,12 @@ import com.carrotsearch.randomizedtesting.JUnit4MethodProvider;
 import com.carrotsearch.randomizedtesting.MixWithSuiteName;
 import com.carrotsearch.randomizedtesting.annotations.SeedDecorators;
 import com.carrotsearch.randomizedtesting.annotations.TestMethodProviders;
-import com.carrotsearch.randomizedtesting.annotations.TimeoutSuite;
 
 @RunWith(DelegatingRunner.class)
 @TestMethodProviders({
   JUnit4MethodProvider.class
 })
 @SeedDecorators({MixWithSuiteName.class}) // See LUCENE-3995 for rationale.
-@TimeoutSuite(millis = 200000000)
 public class TestExample extends Assert {
 
   @BeforeClass

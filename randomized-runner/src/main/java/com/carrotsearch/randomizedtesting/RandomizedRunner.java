@@ -70,8 +70,6 @@ import com.carrotsearch.randomizedtesting.annotations.TestCaseInstanceProvider;
 import com.carrotsearch.randomizedtesting.annotations.TestCaseOrdering;
 import com.carrotsearch.randomizedtesting.annotations.TestContextRandomSupplier;
 import com.carrotsearch.randomizedtesting.annotations.TestMethodProviders;
-import com.carrotsearch.randomizedtesting.annotations.Timeout;
-import com.carrotsearch.randomizedtesting.annotations.TimeoutSuite;
 import com.carrotsearch.randomizedtesting.rules.StatementAdapter;
 
 /**
@@ -123,38 +121,6 @@ public final class RandomizedRunner extends Runner implements Filterable {
    * seeds used during execution.
    */
   public static final String AUGMENTED_SEED_PACKAGE = "__randomizedtesting";
-
-  /**
-   * Default timeout for a single test case. By default
-   * the timeout is <b>disabled</b>. Use global system property
-   * {@link SysGlobals#SYSPROP_TIMEOUT()} or an annotation {@link Timeout} if you need to set
-   * timeouts or expect some test cases may hang. This will slightly slow down
-   * the tests because each test case is executed in a forked thread.
-   *
-   * @see SysGlobals#SYSPROP_TIMEOUT()
-   */
-  public static final int DEFAULT_TIMEOUT = 0;
-
-  /**
-   * Default timeout for an entire suite. By default
-   * the timeout is <b>disabled</b>. Use the global system property
-   * {@link SysGlobals#SYSPROP_TIMEOUT_SUITE()} or an annotation {@link TimeoutSuite}
-   * if you need to set
-   * timeouts or expect some tests (hooks) may hang.
-   *
-   * @see SysGlobals#SYSPROP_TIMEOUT_SUITE()
-   */
-  public static final int DEFAULT_TIMEOUT_SUITE = 0;
-
-  /**
-   * The default number of first interrupts, then Thread.stop attempts.
-   */
-  public static final int DEFAULT_KILLATTEMPTS = 5;
-
-  /**
-   * Time in between interrupt retries or stop retries.
-   */
-  public static final int DEFAULT_KILLWAIT = 500;
 
   /**
    * The default number of test repeat iterations.
@@ -1756,13 +1722,6 @@ public final class RandomizedRunner extends Runner implements Filterable {
         .isPublic()
         .isNotStatic()
         .hasArgsCount(0);
-
-      // No @Test(timeout=...) and @Timeout at the same time.
-      Test testAnn = classModel.getAnnotation(method, Test.class, true);
-      if (testAnn != null && testAnn.timeout() > 0 && classModel.isAnnotationPresent(method, Timeout.class, true)) {
-        throw new IllegalArgumentException("Conflicting @Test(timeout=...) and @Timeout " +
-            "annotations in: " + suiteClass.getName() + "#" + method.getName());
-      }
 
       // @Seed annotation on test methods must have at most 1 seed value.
       Seed seed = classModel.getAnnotation(method, Seed.class, true);
