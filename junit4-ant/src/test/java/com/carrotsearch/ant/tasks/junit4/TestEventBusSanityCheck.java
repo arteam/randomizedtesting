@@ -14,16 +14,11 @@ import org.junit.Test;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 import com.carrotsearch.randomizedtesting.annotations.Repeat;
-import com.carrotsearch.randomizedtesting.annotations.ThreadLeakLingering;
-import com.carrotsearch.randomizedtesting.annotations.ThreadLeakScope;
-import com.carrotsearch.randomizedtesting.annotations.ThreadLeakScope.Scope;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import static org.junit.Assert.*;
 
-@ThreadLeakScope(Scope.SUITE)
-@ThreadLeakLingering(linger = 1000)
 public class TestEventBusSanityCheck extends RandomizedTest {
   static class ForkedJvmIdle {
     public void finished() {

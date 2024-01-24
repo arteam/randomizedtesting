@@ -3,10 +3,7 @@ package com.carrotsearch.ant.tasks.junit4.tests;
 import org.junit.*;
 
 import com.carrotsearch.randomizedtesting.RandomizedTest;
-import com.carrotsearch.randomizedtesting.annotations.ThreadLeakScope;
-import com.carrotsearch.randomizedtesting.annotations.ThreadLeakScope.Scope;
 
-@ThreadLeakScope(Scope.SUITE)
 public class OutOfOrderSysouts extends RandomizedTest {
   private static Thread t;
 
