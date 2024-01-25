@@ -4,7 +4,6 @@ import org.junit.runners.JUnit4;
 
 import com.carrotsearch.randomizedtesting.annotations.Repeat;
 import com.carrotsearch.randomizedtesting.annotations.Seeds;
-import com.carrotsearch.randomizedtesting.rules.RequireAssertionsRule;
 
 /**
  * Global names for system properties controlling the behavior of {@link JUnit4} ANT task

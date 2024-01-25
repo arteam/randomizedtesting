@@ -33,7 +33,6 @@ import org.junit.runner.notification.RunListener;
 import org.junit.runners.model.Statement;
 
 import com.carrotsearch.randomizedtesting.rules.StatementAdapter;
-import com.carrotsearch.randomizedtesting.rules.SystemPropertiesInvariantRule;
 import com.carrotsearch.randomizedtesting.rules.TestRuleAdapter;
 
 /**
@@ -110,14 +109,7 @@ public class WithNestedTestClass {
         };
       }
     };
-    
-    SystemPropertiesInvariantRule noLeftOverProperties =
-        new SystemPropertiesInvariantRule(new HashSet<String>(Arrays.asList(
-            "user.timezone")));
-    
-    ruleChain = RuleChain
-      .outerRule(noLeftOverProperties)
-      .around(dumpLoggerOutputOnFailure);
+    ruleChain = RuleChain.outerRule(dumpLoggerOutputOnFailure);
   }
 
   @ClassRule

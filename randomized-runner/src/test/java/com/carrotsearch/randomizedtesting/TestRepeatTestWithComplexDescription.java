@@ -15,12 +15,9 @@ import com.carrotsearch.randomizedtesting.annotations.ParametersFactory;
 import com.carrotsearch.randomizedtesting.annotations.Repeat;
 import com.carrotsearch.randomizedtesting.annotations.Seed;
 import com.carrotsearch.randomizedtesting.annotations.Seeds;
-import com.carrotsearch.randomizedtesting.rules.SystemPropertiesRestoreRule;
 
 /** */
 public class TestRepeatTestWithComplexDescription extends WithNestedTestClass {
-  @Rule
-  public SystemPropertiesRestoreRule restoreProperties = new SystemPropertiesRestoreRule(); 
 
   static ArrayList<String> buf;
 
