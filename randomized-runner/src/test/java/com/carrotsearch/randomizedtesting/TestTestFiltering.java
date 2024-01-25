@@ -10,18 +10,14 @@ import java.lang.annotation.Target;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Rule;
 import org.junit.Test;
 
 import com.carrotsearch.randomizedtesting.annotations.TestGroup;
-import com.carrotsearch.randomizedtesting.rules.SystemPropertiesRestoreRule;
 
 /**
  * Custom test groups.
  */
 public class TestTestFiltering extends WithNestedTestClass {
-  @Rule
-  public SystemPropertiesRestoreRule restoreProperties = new SystemPropertiesRestoreRule(); 
 
   @Retention(RetentionPolicy.RUNTIME)
   @Target({ElementType.METHOD, ElementType.TYPE})
